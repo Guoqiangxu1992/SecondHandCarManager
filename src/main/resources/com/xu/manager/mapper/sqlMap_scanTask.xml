@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xu.manager.dao.ScanTaskDao">
+
+	<!-- 查找车辆信息信息 -->
+	<select id="getScanTaskList" resultType="com.xu.manager.bean.ScanTaskVo" parameterType="com.xu.manager.bean.ScanTaskDto">
+		select id as id,
+		task_id as taskId,
+		car_name as carName,
+		country as country,
+		owner_name as ownerName,
+		status as status,
+		update_time as updateTime,
+		create_time as createTime,
+		creator as creator
+		from Scan_Task st
+       <include refid="searchCondition"></include>
+	</select>
+	
+	
+	  <!-- 查询条件 -->
+	<sql id="searchCondition">
+	   <where>
+	   		<if test="scanTaskDto.taskId != null and scanTaskDto.taskId!=''">
+				and st.task_id =#{scanTaskDto.taskId}
+			</if>
+		 	<if test="scanTaskDto.status != null and scanTaskDto.status!=''">
+				and st.status =#{scanTaskDto.status}#
+			</if>
+			<if test="scanTaskDto.carName != null and scanTaskDto.carName!=''">
+				and st.car_name =#{scanTaskDto.carName}#
+			</if>
+	   </where>
+			 
+			
+	</sql>
+</mapper> 

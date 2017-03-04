@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xu.manager.dao.CarInformationDao">
+	<resultMap type="com.xu.manager.bean.CarInformation" id="carInformationMap">
+		<id property="id" column="id"></id>
+		<result property="carId" column="car_id" />
+		<result property="carName" column="car_name" />
+		<result property="carType" column="car_type" />
+		<result property="carTypeId" column="car_type_id" />
+		<result property="carNameId" column="car_name_id"></result>
+		<result property="travelAge" column="travel_milage" />
+		<result property="variableBox" column="variable_box" />
+		<result property="displaceMent" column="displaceMent" />
+		<result property="color" column="color" />
+		<result property="country" column="country" />
+		<result property="carDate" column="car_date" />
+		<result property="carAge" column="car_age" />
+		<result property="status" column="status" />
+		
+		<result property="carInfoDetail" column="carInfo_detail" />
+		<result property="ownerId" column="owner_id" />
+		<association property="price" javaType="com.xu.manager.bean.Price">
+			<result property="carId" column="car_id" />
+			<result property="carPrice" column="car_price" />
+		</association>
+		<association property="registerUser" javaType="com.xu.manager.bean.RegisterUser">
+			<result property="id" column="id"/>
+			<result property="loginName" column="login_name"/>
+			<result property="name" column="name"/>
+			<result property="email" column="email"/>
+			<result property="phone" column="phone"/>
+		</association>
+		
+	</resultMap>
+
+
+	<!-- 查找车辆信息信息 -->
+	<select id="getCarInformation"  resultMap="carInformationMap">
+	  SELECT
+	a.id,
+	a.car_id,
+	a.car_name,
+	a.car_type,
+	car_type_id,
+	car_name_id,
+	travel_milage,
+	variable_box,
+	displacement,
+	color,
+	country,
+	car_date,
+	car_age,
+	STATUS,
+	owner_id,
+	b.car_price,
+  c.login_name,
+  c.name,
+  c.email,
+  c.phone
+FROM
+	car_info a
+LEFT JOIN price b ON a.car_id = b.car_id
+LEFT JOIN t_user c on a.owner_id = c.id 
+order by create_date desc
+ limit #{carInfoDto.start},#{carInfoDto.limit}
+ 
+	</select>
+	
+	
+	<select id="countGetCarInformation"  resultType="int">
+	    			SELECT count(*)
+                      FROM
+                 	car_info a
+                    LEFT JOIN price b ON a.car_id = b.car_id
+                 LEFT JOIN t_user c on a.owner_id = c.id 
+	</select>
+	
+  
+  <!-- 查询条件 -->
+	<sql id="searchCondition">
+
+			 <!-- <if test="loginUserDto.loginName != null and loginUserDto.loginName!=''">
+				and u.login_name like "%"#{loginUserDto.loginName}"%"
+			</if>
+		 	<if test="loginUserDto.roleId != null and loginUserDto.roleId!=''">
+				and u.role_id == #{loginUserDto.roleId}#
+			</if>
+			<if test="loginUserDto.startTime != null and loginUserDto.startTime!=''">
+			 <![CDATA[ 
+				and u.make_time>=#{loginUserDto.startTime}
+				]]>
+			</if> 
+				<if test="loginUserDto.endTime != null and loginUserDto.endTime !=''">
+			 <![CDATA[ 
+				and u.make_time<=#{loginUserDto.endTime}
+				]]>
+			</if>  -->
+			
+	</sql>
+	
+	<insert id="insertCarInformation" parameterType="com.xu.manager.bean.CarInformation">
+			insert into car_info (car_id,car_name,car_type,car_type_id,car_name_id,travel_milage,variable_box,displacement,
+			color,
+			country,
+			car_date,
+			car_age,
+			STATUS,
+			owner_id,
+			carInfo_detail,
+			create_date)
+			values(
+			#{carId},
+			#{carName},
+			#{carType},
+			#{carTypeId},
+			#{carNameId},
+			#{travelAge},
+			#{variableBox},
+			#{displaceMent},
+			#{color},
+			#{country},
+			#{carDate},
+			#{carAge},
+			#{status},
+			#{ownerId},
+			#{carInfoDetail},
+			NOW()
+			)
+	
+	</insert>
+	
+	<insert id="insertCarPrice" parameterType="com.xu.manager.bean.Price">
+	    insert into price (car_id,car_price) values (#{carId},#{carPrice})
+	</insert>
+	
+	
+	<insert id = "savePictureInfo" parameterType="com.xu.manager.bean.PictureInformation">
+		insert into mc_carinfo_picture (id,car_id,picture_id,picture_url,create_time,is_delete,upload_id,original_name) 
+		value(
+		#{id},
+		#{carId},
+		#{pictureId},
+		#{url},
+		#{createTime},
+		0,
+		#{uploaderId},
+		#{originalName}
+		)
+	</insert>
+	
+	<select id="queryBaseWord" resultType="String">
+				select word  from word_base 
+				where is_delete=0 and status=1
+	
+	</select>
+	
+	
+	<!-- 查找车辆信息信息 -->
+	<select id="getCarInformation1"  resultMap="carInformationMap">
+	  SELECT
+	a.id,
+	a.car_id,
+	a.car_name,
+	a.car_type,
+	car_type_id,
+	car_name_id,
+	travel_milage,
+	variable_box,
+	displacement,
+	color,
+	country,
+	car_date,
+	car_age,
+	STATUS,
+	owner_id,
+	b.car_price,
+  c.login_name,
+  c.name,
+  c.email,
+  c.phone,
+  a.carInfo_detail
+FROM
+	car_info a
+LEFT JOIN price b ON a.car_id = b.car_id
+LEFT JOIN t_user c on a.owner_id = c.id 
+ <include refid="searchCondition2"></include>
+	</select>
+	
+	  <!-- 查询条件 -->
+	<sql id="searchCondition2">
+	   <where>
+	   		<if test="carInfoDto.carName != null" >
+				and a.car_name =#{carInfoDto.carName}
+			</if>
+	   </where>
+	   </sql>
+</mapper> 

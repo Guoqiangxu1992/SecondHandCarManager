@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xu.manager.dao.QuartzDao">
+
+	<!-- 查找车辆信息信息 -->
+	<select id="getQuartzList"  resultType="com.quartz.ScheduleJob">
+	 select id as id,
+job_id as jobId,
+job_name as jobName,
+job_group as jobGroup,
+job_status as jobStatus,
+con_Expression as cronExpression,
+update_time as updateTime,
+create_time as createTime,
+creator as creator
+from quartz_job
+ 
+	</select>
+	
+	
+	<select id="countGetQuartzList"  resultType="int">
+	    			SELECT count(*)
+                      FROM
+               from quartz_job
+	</select>
+	
+  <insert id="insertQuartzJob">
+      insert into quartz_job
+      (id,
+      job_id,
+      job_name,
+      job_group,
+      job_status,
+      con_Expression,
+      create_time,
+      update_time,
+      creator)
+      value
+      (
+      #{id},
+       #{jobId},
+        #{jobName},
+         #{jobGroup},
+          #{jobStatus},
+           #{cronExpression},
+            now(),
+            now(),
+            #{creator}
+      )
+  </insert>
+  
+  <select id="findScheduleJobByJobId" parameterType="Long" resultType="com.quartz.ScheduleJob">
+  		 select id as id,
+job_id as jobId,
+job_name as jobName,
+job_group as jobGroup,
+job_status as jobStatus,
+con_Expression as cronExpression,
+update_time as updateTime,
+create_time as createTime,
+creator as creator
+from quartz_job q
+where  q.job_id =#{jobId}
+  
+  </select>
+  
+  <update id="updateStatusByJobId" parameterType="Long">
+  		update quartz_job q
+  		set q.job_status = 1,
+  		q.update_time = now()
+  		where q.job_id = #{jobId}
+  </update>
+  
+  <update id="updateStatusPauseByJobId" parameterType="Long">
+  		update quartz_job q
+  		set q.job_status = 0,
+  		q.update_time = now()
+  		where q.job_id = #{jobId}
+  </update>
+  
+  <update id="updateCronExpressionByJobId">
+  		update quartz_job q
+  		set q.con_Expression = #{cronExpression},
+  		q.update_time = now()
+  		where q.job_id = #{jobId}
+  
+  </update>
+</mapper> 

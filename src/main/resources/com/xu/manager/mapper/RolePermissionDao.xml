@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xu.manager.dao.RolePermissionDao">
+	<select id="getRolePermission" resultMap="parentPermission">
+    		select 
+			id,
+			pid,
+			name name,
+			permission permission,
+			false leaf,
+			value value
+			from t_permission
+			where pid = 0 
+			order by position asc
+    
+    </select>
+    
+    
+    <resultMap type="com.xu.manager.bean.RolePermissionTreeVo" id="parentPermission">
+		<id property="id" column="id" javaType="java.lang.Long" />
+		<result property="pid" column="pid" javaType="java.lang.Long" />
+		<result property="text" column="name" javaType="java.lang.String" />
+		<result property="permission" column="permission" javaType="java.lang.String" />
+		<result property="value" column="value" javaType="java.lang.String" />
+		<collection property="children"  
+		 			ofType="com.xu.manager.bean.RolePermissionTreeVo"
+		            select="selectOnePermission" 
+		            column="id2 = id" >
+		</collection>
+	</resultMap>
+	
+	
+	<select id="selectOnePermission" parameterType="java.util.HashMap" resultType="com.xu.manager.bean.RolePermissionTreeVo" resultMap="OnePermission2"  >
+		select 
+			id,
+			pid,
+			name name,
+			permission permission,
+			true leaf,
+			value value
+			from t_permission
+			where pid = ${id2} 
+			order by position asc
+	</select>
+
+	<resultMap type="com.xu.manager.bean.RolePermissionTreeVo" id="OnePermission2" >
+		<id property="id" column="id" javaType="java.lang.Long" />
+		<result property="pid" column="pid" javaType="java.lang.Long" />
+		<result property="text" column="name" javaType="java.lang.String" />
+		<result property="permission" column="permission" javaType="java.lang.String" />
+		<result property="value" column="value" javaType="java.lang.String" />
+		
+	</resultMap>
+	  <select id="getRoles" resultType="java.util.HashMap"  >
+
+  	SELECT id id,
+  	name name,
+	role_value rolevalue
+	FROM t_role
+	WHERE 1=1
+  	order by id
+
+  </select>
+	
+</mapper>
