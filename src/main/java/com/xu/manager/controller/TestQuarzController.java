@@ -3,6 +3,8 @@ package com.xu.manager.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
@@ -25,6 +27,7 @@ import com.quartz.ScheduleJob;
 import com.xu.manager.ClassUtil.RedisClient;
 import com.xu.manager.bean.MenuBean;
 import com.xu.manager.bean.ResultVo;
+import com.xu.manager.service.HelloService;
 import com.xu.manager.service.SensitiveWordService;
 import com.xu.manager.serviceImpl.RedisCache;
 
@@ -38,7 +41,8 @@ import com.xu.manager.serviceImpl.RedisCache;
 public class TestQuarzController {
 	@Autowired
 	private SensitiveWordService sensitiveWordService;
-	
+	@Resource(name="helloService")
+	private HelloService helloService;
 	
 	
 	@RequestMapping(value = "/quartz.do")
@@ -124,6 +128,13 @@ public class TestQuarzController {
 		RedisClient.set("xu", menuBean);
 		MenuBean menuBean2 = (MenuBean) RedisClient.get("xu");
 		System.out.println(menuBean2.getMenuName());
+	}
+	
+	@RequestMapping("/service.do")
+	public void service() throws Exception {
+		helloService.sayHello("xuguoqiang,hello!!!!!");
+		Object o = helloService.set("yangchunxue1111", "l love you11111111!!!");
+		System.out.println("返回值为：---》"+o.toString());
 	}
 
 }

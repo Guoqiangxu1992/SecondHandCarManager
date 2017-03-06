@@ -13,7 +13,7 @@
     http://www.springframework.org/schema/cache 
      http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
       http://www.springframework.org/schema/aop 
-http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">  
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 	<!-- 自动扫描 自动扫描 将标注Spring注解的类自动转化Bean -->
 	<context:component-scan base-package="com.xu" />
@@ -43,8 +43,16 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 		<property name="basePackage" value="com.xu.manager.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
+ 
+  
+  <!--  <bean id="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+  <constructor-arg index="0" ref="sqlSessionFactory" /> 
+  </bean>
+     
+	使用annotation注解方式配置事务
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<!-- (事务管理)transaction manager -->
+	(事务管理)transaction manager
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource">
@@ -52,17 +60,43 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 		</property>
 	</bean>
 
+	 <tx:advice id="sqlTxAdvice" transaction-manager="transactionManager">
+   <tx:attributes>
+    			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="ins*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="select*" read-only="true" />
+			
+   
+  <tx:method name="*" propagation="REQUIRED" /> 
+  </tx:attributes>
+  </tx:advice>
+	 -->
 
+	<!--<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>-->
+	<!--  <aop:config proxy-target-class="true">
+		<aop:pointcut id="transactionPointcut"
+			expression="execution(* com.xu.manager.**.service.*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointcut"
+			advice-ref="sqlTxAdvice" />
+	</aop:config>  -->
 
-	<!--<tx:advice id="transactionAdvice" transaction-manager="transactionManager"> 
-		<tx:attributes> <tx:method name="*" propagation="REQUIRED" rollback-for="Exception" 
-		/> </tx:attributes> </tx:advice> <aop:config proxy-target-class="true"> <aop:pointcut 
-		id="transactionPointcut" expression="execution(* com.xu.manager.**.service.*.*(..))" 
-		/> <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" 
-		/> </aop:config> -->
-    
-    <import resource="classpath:spring/spring-shiro.xml" />
-    <import resource="classpath:config/ehcacheConfig.xml" />
+	<import resource="classpath:spring/spring-shiro.xml" />
+	<import resource="classpath:config/ehcacheConfig.xml" />
+	<import resource="classpath:spring/spring-hessian.xml" />
 	<!-- <import resource="classpath:redis-context.xml"/> -->
 	
+	
+	<bean name="helloService"
+        class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="http://localhost:8081/redis-in-actions/hessian/helloservice"></property>
+        <property name="serviceInterface" value="com.xu.manager.service.HelloService"></property>
+    </bean>
 </beans>
