@@ -94,9 +94,5 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 	<!-- <import resource="classpath:redis-context.xml"/> -->
 	
 	
-	<bean name="helloService"
-        class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-        <property name="serviceUrl" value="http://localhost:8081/redis-in-actions/hessian/helloservice"></property>
-        <property name="serviceInterface" value="com.xu.manager.service.HelloService"></property>
-    </bean>
+	
 </beans>

@@ -28,6 +28,7 @@ import com.xu.manager.ClassUtil.RedisClient;
 import com.xu.manager.bean.MenuBean;
 import com.xu.manager.bean.ResultVo;
 import com.xu.manager.service.HelloService;
+import com.xu.manager.service.MessageManager;
 import com.xu.manager.service.SensitiveWordService;
 import com.xu.manager.serviceImpl.RedisCache;
 
@@ -43,6 +44,8 @@ public class TestQuarzController {
 	private SensitiveWordService sensitiveWordService;
 	@Resource(name="helloService")
 	private HelloService helloService;
+	@Resource
+	private MessageManager messageManager;
 	
 	
 	@RequestMapping(value = "/quartz.do")
@@ -135,6 +138,9 @@ public class TestQuarzController {
 		helloService.sayHello("xuguoqiang,hello!!!!!");
 		Object o = helloService.set("yangchunxue1111", "l love you11111111!!!");
 		System.out.println("返回值为：---》"+o.toString());
+		Object o1 = messageManager.callBack("xuguoqiang", "hahaha");
+		System.out.println("call="+o.toString());
+		
 	}
 
 }
