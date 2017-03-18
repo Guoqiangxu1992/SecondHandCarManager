@@ -1,7 +1,9 @@
 package com.xu.manager.controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.Resource;
 
@@ -27,10 +29,12 @@ import com.quartz.ScheduleJob;
 import com.xu.manager.ClassUtil.RedisClient;
 import com.xu.manager.bean.MenuBean;
 import com.xu.manager.bean.ResultVo;
+import com.xu.manager.bean.ScanTaskVo;
 import com.xu.manager.service.HelloService;
 import com.xu.manager.service.MessageManager;
 import com.xu.manager.service.SensitiveWordService;
 import com.xu.manager.serviceImpl.RedisCache;
+import com.xu.task.AnsyScanTask;
 
 /**
 * @author Create By Xuguoqiang
@@ -46,6 +50,8 @@ public class TestQuarzController {
 	private HelloService helloService;
 	@Resource
 	private MessageManager messageManager;
+	@Autowired
+	private AnsyScanTask ansyScanTask;
 	
 	
 	@RequestMapping(value = "/quartz.do")
@@ -141,6 +147,13 @@ public class TestQuarzController {
 		Object o1 = messageManager.callBack("xuguoqiang", "hahaha");
 		System.out.println("call="+o.toString());
 		
+	}
+	
+	@RequestMapping("/ansyScanTask.do")
+	public void ansyScanTask() throws InterruptedException, ExecutionException, ParseException{
+		ScanTaskVo scanTaskVo = new ScanTaskVo();
+		scanTaskVo.setCarName("红旗");
+		ansyScanTask.scanTask(scanTaskVo);
 	}
 
 }

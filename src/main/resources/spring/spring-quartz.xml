@@ -17,7 +17,7 @@
     <!--运行时请将方式一注释掉！ -->  
     <!-- 方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法 -->  
     <!-- 定义目标bean和bean中的方法 -->  
-    <bean id="SpringQtzJob" class="com.quartz.TestQuartz" />  
+    <bean id="SpringQtzJob" class="com.quartz.InitCacheQuartz" />  
      
     <bean id="SpringQtzJobMethod"  
         class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
@@ -39,8 +39,8 @@
     </bean>  
   
     <!-- ======================== 调度工厂 ======================== -->  
-    <bean id="SpringJobSchedulerFactoryBean"  
-        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+    <bean id="initJobSchedulerFactoryBean"  
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean" scope="prototype">  
         <property name="triggers">  
             <list>  
                 <ref bean="CronTriggerBean" />  

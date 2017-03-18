@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class DateFormat{
+public class DateFormat1{
 	//日期格式
 	private static final String DATE_PATTERN_1 = "yyyy-MM-dd";
 	private static final String DATE_PATTERN_2 = "yyyyMMdd";

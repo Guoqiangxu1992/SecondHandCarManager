@@ -14,7 +14,7 @@ import org.springside.modules.security.utils.Digests;
 import org.springside.modules.utils.Encodes;
 
 import com.alibaba.druid.support.logging.Log;
-import com.xu.manager.ClassUtil.DateFormat;
+import com.xu.manager.ClassUtil.DateFormat1;
 import com.xu.manager.bean.LoginUser;
 import com.xu.manager.bean.RegisterUser;
 import com.xu.manager.dao.AccountDao;

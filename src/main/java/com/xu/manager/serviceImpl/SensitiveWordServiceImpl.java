@@ -20,7 +20,7 @@ import com.xu.manager.service.SensitiveWordService;
  * @date 2016年12月14日--下午8:30:02--
  *
  */
-@Service
+@Service("sensitiveWordService")
 public class SensitiveWordServiceImpl implements SensitiveWordService {
 
 	@Autowired

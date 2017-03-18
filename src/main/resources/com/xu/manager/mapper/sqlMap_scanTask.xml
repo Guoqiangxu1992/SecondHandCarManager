@@ -31,7 +31,13 @@
 				and st.car_name =#{scanTaskDto.carName}#
 			</if>
 	   </where>
-			 
-			
 	</sql>
+	
+	<insert id="saveCheckResult" parameterType="com.xu.manager.bean.CheckResult">
+		insert into check_result(id,car_id,car_name,result)
+        values
+        <foreach collection="list" item="checkResult" index="index" separator=",">
+            (#{checkResult.id},#{checkResult.carId},#{checkResult.carName},#{checkResult.result})
+        </foreach>
+	</insert>
 </mapper> 
