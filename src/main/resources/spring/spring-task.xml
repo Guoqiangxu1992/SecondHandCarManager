@@ -5,9 +5,8 @@
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
           >
 <bean name ="AnsyScanTask" class="com.xu.task.AnsyScanTask">
-	<constructor-arg ref="scanTaskManager"></constructor-arg>
 </bean>
-<bean name ="InitCacheQuartz" class="com.quartz.InitCacheQuartz" lazy-init="true">
-</bean>
+<!-- <bean name ="InitCacheQuartz" class="com.quartz.InitCacheQuartz" lazy-init="true">
+</bean> -->
           
 </beans>          

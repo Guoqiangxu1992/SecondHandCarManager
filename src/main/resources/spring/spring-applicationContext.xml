@@ -13,11 +13,16 @@
     http://www.springframework.org/schema/cache 
      http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
       http://www.springframework.org/schema/aop 
-http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<!-- 自动扫描 自动扫描 将标注Spring注解的类自动转化Bean -->
-	<context:component-scan base-package="com.xu" />
-	<context:component-scan base-package="com.quartz" />
+	<context:component-scan base-package="com.xu" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />   
+	</context:component-scan>
+	<context:component-scan base-package="com.quartz">
+	</context:component-scan>
 	<!-- 引入jdbc属性配置文件 -->
 	<context:property-placeholder location="classpath:properties/jdbc.properties" />
 	<!-- 数据库的连接 -->
@@ -43,58 +48,21 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 		<property name="basePackage" value="com.xu.manager.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
- 
-  
-  <!--  <bean id="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
-  <constructor-arg index="0" ref="sqlSessionFactory" /> 
-  </bean>
-     
-	使用annotation注解方式配置事务
-	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	(事务管理)transaction manager
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource">
+	
+	<!--事务管理器类 -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource"></property>
+    </bean> 
 
-		</property>
-	</bean>
-
-	 <tx:advice id="sqlTxAdvice" transaction-manager="transactionManager">
-   <tx:attributes>
-    			<tx:method name="save*" propagation="REQUIRED" />
-			<tx:method name="ins*" propagation="REQUIRED" />
-			<tx:method name="del*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="find*" read-only="true" />
-			<tx:method name="get*" read-only="true" />
-			<tx:method name="select*" read-only="true" />
-			
-   
-  <tx:method name="*" propagation="REQUIRED" /> 
-  </tx:attributes>
-  </tx:advice>
-	 -->
-
-	<!--<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="*" propagation="REQUIRED" rollback-for="Exception" />
-		</tx:attributes>
-	</tx:advice>-->
-	<!--  <aop:config proxy-target-class="true">
-		<aop:pointcut id="transactionPointcut"
-			expression="execution(* com.xu.manager.**.service.*.*(..))" />
-		<aop:advisor pointcut-ref="transactionPointcut"
-			advice-ref="sqlTxAdvice" />
-	</aop:config>  -->
+    <!--注解方式实现声明式事务，指定注解方式实现事务-->
+    <tx:annotation-driven transaction-manager="txManager"/>
 
 	<import resource="classpath:spring/spring-shiro.xml" />
 	<import resource="classpath:config/ehcacheConfig.xml" />
 	<import resource="classpath:spring/spring-hessian.xml" />
 	<import resource="classpath:spring/spring-dynamicQuarz.xml" />
 	<import resource="classpath:spring/spring-task.xml" />
-	
-	<!-- <import resource="classpath:redis-context.xml"/> -->
 	
 	
 	

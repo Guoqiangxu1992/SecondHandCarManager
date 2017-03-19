@@ -20,7 +20,7 @@
     <bean id="springUtils" class="com.xu.manager.ClassUtil.SpringUtils"/>
     <bean id ="ScanTaskHelper" class="com.xu.manager.ClassUtil.ScanTaskHelper" autowire="byName"></bean>
     
-    <bean id="SchedulerFactoryBean"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean" scope="prototype">
+    <bean id="SchedulerFactoryBean"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
     </bean>
     
     <bean id="QuartzJobFactoryImpl" class="com.quartz.QuartzJobFactoryImpl"></bean>

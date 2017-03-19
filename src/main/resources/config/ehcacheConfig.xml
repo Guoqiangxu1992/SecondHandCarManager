@@ -13,7 +13,7 @@
     http://www.springframework.org/schema/cache 
      http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
       http://www.springframework.org/schema/aop 
-http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"> 
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">   
 
 
 	<!-- 配置Ehcache缓存[1] 启用缓存注解功能-->

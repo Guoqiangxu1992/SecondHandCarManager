@@ -33,8 +33,6 @@ public class MyRealm extends AuthorizingRealm{
 	
 	@Resource
 	public LoginUserService loginUserService;
-	@Resource
-	public com.xu.manager.serviceImpl.AccountServiceImpl accountServiceImpl;
 
 	
 	@Override
@@ -73,8 +71,8 @@ public class MyRealm extends AuthorizingRealm{
 	 */
 	@PostConstruct
 	public void initCredentialsMatcher() {
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(accountServiceImpl.HASH_ALGORITHM);
-		matcher.setHashIterations(accountServiceImpl.HASH_INTERATIONS);
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher("SHA-1");
+		matcher.setHashIterations(1024);
 		setCredentialsMatcher(matcher);
 	}
 

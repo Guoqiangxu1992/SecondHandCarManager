@@ -46,8 +46,8 @@ public class LoginUserController {
 		try{
 			LoginUser user = new LoginUser(); 
 			System.out.println(XgqSessionBag.getSessionBag());
-			LoginUser loginUser1 = XgqSessionBag.getSessionBag().getLoginUser();
-			System.out.println(loginUser1.getEmail());
+			//LoginUser loginUser1 = XgqSessionBag.getSessionBag().getLoginUser();
+			//System.out.println(loginUser1.getEmail());
 			SessionBagImpl sessionBag = new SessionBagImpl();
 			if(sessionBag.getLoginUser()!=null){
 				user = sessionBag.getLoginUser();
@@ -57,7 +57,7 @@ public class LoginUserController {
 				XgqSessionBag.setSessionBag(sessionBag);
 				
 				LoginUser user1  = XgqSessionBag.getSessionBag().getLoginUser();
-				System.out.println(user1.getLoginName());
+				//System.out.println(user1.getLoginName());
 			}
 			
 			session.setAttribute("SESSION_LOGIN_USER",user);

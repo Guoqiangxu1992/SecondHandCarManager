@@ -36,7 +36,7 @@ public class LoginMenuController {
 	@Autowired
 	private MenuService menuService;
 	/*根据用户名获取菜单*/
-	@RequestMapping("/getMenuByName.do")
+	@RequestMapping(value = "/getMenuByName.do")
 	@ResponseBody
 	public String getMenuByName(LoginUser user,HttpSession session,Model model){
 		LoginUser loginUser = (LoginUser) session.getAttribute("SESSION_LOGIN_USER");

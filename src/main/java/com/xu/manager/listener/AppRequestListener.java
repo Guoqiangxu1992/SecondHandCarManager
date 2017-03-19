@@ -43,7 +43,7 @@ public class AppRequestListener implements ServletRequestListener{
 			sessionBag = new SessionBagImpl();
 			LoginUserService loginUserService = SpringUtils.getBean("loginUserService");
 			LoginUser loginUser = loginUserService.findUserByUsername(username);
-			System.out.println(loginUser.getEmail());
+			//System.out.println(loginUser.getEmail());
 			if(loginUser!=null){
 				sessionBag.setLoginUser(loginUser);
 				XgqSessionBag.setSessionBag(sessionBag);

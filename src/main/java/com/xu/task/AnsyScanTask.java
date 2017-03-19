@@ -8,6 +8,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -21,13 +23,10 @@ import com.xu.manager.service.ScanTaskManager;
 *
 */
 public class AnsyScanTask {
+	@Resource
 	private ScanTaskManager scanTaskManager;
 	private static Log logger = LogFactory.getLog(AnsyScanTask.class);
 	private static ExecutorService executor = Executors.newFixedThreadPool(5);
-	
-	public AnsyScanTask(ScanTaskManager scanTaskManager){
-		this.scanTaskManager = scanTaskManager;
-	}
 
 	@SuppressWarnings("deprecation")
 	public void scanTask(ScanTaskVo scanTaskVo) throws InterruptedException, ExecutionException, ParseException{
