@@ -27,58 +27,18 @@
 			<version>3.4</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
-			<type>jar</type>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>compile</scope>
-		</dependency>
 		<!-- 打印日志 -->
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-			<type>jar</type>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.7</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.21</version>
+		</dependency>
+		
 
 		<!-- 数据库连接 -->
 		<dependency>
@@ -114,6 +74,7 @@
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -132,11 +93,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-instrument</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
@@ -147,13 +103,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>4.2.5.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -162,34 +113,9 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.webflow</groupId>
-			<artifactId>spring-webflow</artifactId>
-			<version>${spring.webflow.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
 		<!-- mybatis begin -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -276,24 +202,6 @@
 			<artifactId>jxl</artifactId>
 			<version>2.6.12</version>
 		</dependency>
-		<!-- 网络通信 -->
-		<dependency>
-			<groupId>com.caucho</groupId>
-			<artifactId>hessian</artifactId>
-			<version>4.0.38</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.xml.rpc</groupId>
-			<artifactId>javax.xml.rpc-api</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.xml</groupId>
-			<artifactId>webservices-api</artifactId>
-			<version>2.0.1-b01</version>
-		</dependency>
 
 		<!--处理Excel -->
 		<dependency>
@@ -327,13 +235,6 @@
 			<version>2.2.3</version>
 			<classifier>jdk15</classifier>
 		</dependency>
-		<!-- 上传文件的支持 -->
-		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.3.1</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -345,13 +246,6 @@
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
-		</dependency>
-		<!-- 定时任务 -->
-		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.2.1</version>
 		</dependency>
 		<!-- 缓存 -->
 		<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache-core -->
@@ -431,19 +325,6 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.springside/springside-utils -->
-		<dependency>
-		    <groupId>io.springside</groupId>
-		    <artifactId>springside-utils</artifactId>
-		    <version>5.0.0-RC1</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/commons-pool/commons-pool <dependency> 
-			<groupId>commons-pool</groupId> <artifactId>commons-pool</artifactId> <version>1.6</version> 
-			</dependency> -->
-
-
-
 	</dependencies>
 
 
@@ -456,9 +337,9 @@
 		<log4j.version>1.2.17</log4j.version>
 		<junit.version>4.11</junit.version>
 	</properties>
+	
+	<!-- maven打包发布 -->
 	<build>
-
-		<!-- maven打包发布 -->
 		<sourceDirectory>src/main/java/</sourceDirectory>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 
@@ -474,14 +355,14 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
+			<plugin> 
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<webappDirectory>src/main/webapp</webappDirectory>
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
 					<dependentWarExcludes>**/*.*</dependentWarExcludes>
 				</configuration>
-			</plugin>
+			</plugin>  
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -490,8 +371,42 @@
 				<configuration>
 					<skipTests>true</skipTests>
 				</configuration>
-			</plugin> 
+			</plugin>
 		</plugins>
 		<finalName>SecondHandCarManager</finalName>
+		</build>
+		<!-- 先指定 src/main/resources下所有文件及文件夹为资源文件 -->
+		
+	<!-- 	<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes> 
+					<include>jdbc_dev.properties</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			默认激活开发配制，使用config-dev.properties来替换设置过虑的资源文件中的${key}
+		   <activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build> 
+				<filters> 
+					<filter>jdbc_dev.properties</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>product</id>
+			<build>
+				<filters>
+					<filter>jdbc_product.properties</filter>
+				</filters>
+			</build>
+		</profile>
+	</profiles> -->
 </project>

@@ -4,9 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
           >
-<bean name ="AnsyScanTask" class="com.xu.task.AnsyScanTask">
+<bean name ="AnsyScanTask" class="com.xu.task.AnsyScanTask"> 
 </bean>
 <!-- <bean name ="InitCacheQuartz" class="com.quartz.InitCacheQuartz" lazy-init="true">
 </bean> -->
+<bean name ="testTask" class="com.xu.task.TestTask">
+</bean>
+
           
 </beans>          
