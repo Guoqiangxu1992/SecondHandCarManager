@@ -7,6 +7,8 @@ import java.util.concurrent.ExecutionException;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
@@ -35,6 +37,7 @@ import com.xu.manager.service.MessageManager;
 import com.xu.manager.service.SensitiveWordService;
 import com.xu.manager.serviceImpl.RedisCache;
 import com.xu.task.AnsyScanTask;
+import com.xu.task.TestTask;
 
 /**
 * @author Create By Xuguoqiang
@@ -52,6 +55,10 @@ public class TestQuarzController {
 	private MessageManager messageManager;
 	@Autowired
 	private AnsyScanTask ansyScanTask;
+	@Autowired
+	private TestTask testTask;
+	
+	private static Log logger = LogFactory.getLog(TestQuarzController.class);
 	
 	
 	@RequestMapping(value = "/quartz.do")
@@ -151,9 +158,16 @@ public class TestQuarzController {
 	
 	@RequestMapping("/ansyScanTask.do")
 	public void ansyScanTask() throws InterruptedException, ExecutionException, ParseException{
-		ScanTaskVo scanTaskVo = new ScanTaskVo();
-		scanTaskVo.setCarName("红旗");
-		ansyScanTask.scanTask(scanTaskVo);
+		//ScanTaskVo scanTaskVo = new ScanTaskVo();
+		//testTask.scanTask(scanTaskVo);
+		try{
+			logger.info("我是ino级别的日志噢噢噢噢");
+			logger.debug("我是debug制作噢噢噢噢！");
+			int a = 9/0;
+			System.out.println(a);
+		}catch(Exception e){
+			logger.error("出现异常信息！！！", e);
+		
 	}
-
+	}
 }

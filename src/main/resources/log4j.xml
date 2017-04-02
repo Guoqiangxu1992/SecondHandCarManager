@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" >
+
+	
+	<appender name="FILE-LOG" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="ERROR" />
+		<param name="File" value="D://logs/test/webapps/secondHandCar_catalina.log" />
+		<param name="Append" value="true" />
+		<param name="MaxFileSize" value="10MB" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} [%p] [%t] [%l] %m%n" />
+		</layout>
+	</appender>
+	<appender name="CONSOLE-LOG" class="org.apache.log4j.ConsoleAppender">
+		<param name="Append" value="true" />
+		<param name="ImmediateFlush" value="true" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} [%p] [%t] [%l] %m%n" />
+		</layout>
+	</appender>
+	<!-- name名称有讲究，必须是类路径，不然不会打印这个路径下的info级别的日志 ，additivity="false"这个属性，如果不设置，其父类的日志也会打印，默认为true-->
+	<logger name="com.xu.manager.controller" additivity="false">
+	  <level value="INFO" />
+      <appender-ref ref="CONSOLE-LOG"/>
+    </logger>
+	<!-- xml打印sql配置 -->
+	<logger name="java.sql">  
+        <level value="DEBUG" />
+    </logger>
+    <logger name="org.apache.ibatis">  
+        <level value="DEBUG" />
+    </logger>
+	<root>
+		<level value="ERROR" />
+		<appender-ref ref="FILE-LOG" />
+		<appender-ref ref="CONSOLE-LOG" />
+	</root>
+	
+
+</log4j:configuration>
