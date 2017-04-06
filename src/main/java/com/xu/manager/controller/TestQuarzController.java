@@ -34,6 +34,7 @@ import com.xu.manager.bean.ResultVo;
 import com.xu.manager.bean.ScanTaskVo;
 import com.xu.manager.service.HelloService;
 import com.xu.manager.service.MessageManager;
+import com.xu.manager.service.ScanTaskManager;
 import com.xu.manager.service.SensitiveWordService;
 import com.xu.manager.serviceImpl.RedisCache;
 import com.xu.task.AnsyScanTask;
@@ -57,6 +58,8 @@ public class TestQuarzController {
 	private AnsyScanTask ansyScanTask;
 	@Autowired
 	private TestTask testTask;
+	@Autowired
+	private ScanTaskManager scanTaskManager;
 	
 	private static Log logger = LogFactory.getLog(TestQuarzController.class);
 	
@@ -158,9 +161,10 @@ public class TestQuarzController {
 	
 	@RequestMapping("/ansyScanTask.do")
 	public void ansyScanTask() throws InterruptedException, ExecutionException, ParseException{
-		//ScanTaskVo scanTaskVo = new ScanTaskVo();
-		//testTask.scanTask(scanTaskVo);
-		try{
+		ScanTaskVo scanTaskVo = new ScanTaskVo();
+		scanTaskVo.setCarName("东风");
+		scanTaskManager.scanTask(scanTaskVo);
+	/*	try{
 			logger.info("我是ino级别的日志噢噢噢噢");
 			logger.debug("我是debug制作噢噢噢噢！");
 			int a = 9/0;
@@ -168,6 +172,6 @@ public class TestQuarzController {
 		}catch(Exception e){
 			logger.error("出现异常信息！！！", e);
 		
-	}
+	}*/
 	}
 }

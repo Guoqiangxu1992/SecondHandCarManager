@@ -36,7 +36,7 @@ public class ScanTaskManagerImpl implements ScanTaskManager{
 	private ScanTaskDao scanTaskDao;
 	private static Log logger = LogFactory.getLog(ScanTaskManagerImpl.class);
 	
-	@Transactional
+	
 	public boolean scanTask(ScanTaskVo scanTaskVo) {
 			if (scanTaskVo != null) {
 				System.out.println("扫描任务开启--->" + scanTaskVo.getCarName());
@@ -60,7 +60,7 @@ public class ScanTaskManagerImpl implements ScanTaskManager{
 					}
 				}
 				scanTaskDao.saveCheckResult(resultList);
-				//int a = 10/0;
+				int a = 10/0;
 				return true;
 			}
 		
