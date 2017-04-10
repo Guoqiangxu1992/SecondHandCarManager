@@ -63,6 +63,7 @@
 	<import resource="classpath:spring/spring-hessian.xml" />
 	<import resource="classpath:spring/spring-dynamicQuarz.xml" />
 	<import resource="classpath:spring/spring-task.xml" />
+	<!-- <import resource="classpath:spring/spring-proxyLog.xml" /> -->
 	
 	
 	

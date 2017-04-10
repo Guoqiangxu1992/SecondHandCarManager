@@ -714,7 +714,7 @@
 	});
 
 	function loadPermission(){
-		url = '/SecondHandCarManager/menu/getMenuByName.do';
+		url = '${xgq}/menu/getMenuByName.do';
 		$.ajax({
 			async: false,
 			type: 'POST',
@@ -803,7 +803,7 @@
 	</script>
 	<script type="text/javascript">
    $('#loginOut').click(function(){
-	   window.location.href="/SecondHandCarManager/login.jsp";		
+	   window.location.href="/${xgq}/login.jsp";		
 	   
 	   
    })

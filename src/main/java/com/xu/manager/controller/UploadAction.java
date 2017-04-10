@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.util.RequestUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUpload;
@@ -38,7 +36,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Controller
 @Scope("prototype")
 @RequestMapping("/upload")
-@MultipartConfig
 public class UploadAction {
 	@RequestMapping(value = "/uploadfile.do", method = RequestMethod.POST)
 	public void uploadFile(HttpServletRequest request, HttpServletResponse response) throws Exception {

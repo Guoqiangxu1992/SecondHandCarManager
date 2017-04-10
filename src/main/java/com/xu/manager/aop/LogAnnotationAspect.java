@@ -22,7 +22,6 @@ import org.aspectj.lang.annotation.Pointcut;
 	 */    
 	@Aspect  //定义切面类     
 	public class LogAnnotationAspect {     
-	    @SuppressWarnings("unused")     
 	    //定义切入点     
 	    @Pointcut("execution(* com.zxf.service.*.*(..))")     
 	    private void allMethod(){}     
@@ -32,25 +31,25 @@ import org.aspectj.lang.annotation.Pointcut;
 	             
 	        String className = call.getTarget().getClass().getName();     
 	        String methodName = call.getSignature().getName();     
-	       //  System.out.println("*************************************************************************************************");
-	       //  System.out.println("*****************************【注解-前置通知】:" + className + "类的"  + methodName + "方法开始了***");     
+	        System.out.println("*************************************************************************************************");
+	        System.out.println("*****************************【注解-前置通知】:" + className + "类的"  + methodName + "方法开始了***");     
 	    }     
 	    //访问命名切入点来应用后置通知     
 	    @AfterReturning("allMethod()")     
 	    public void afterReturn() {     
-	      //  System.out.println("*****************************【注解-后置通知】:方法正常结束了******************************************");     
+	       System.out.println("*****************************【注解-后置通知】:方法正常结束了******************************************");     
 	    }     
 	         
 	    //应用最终通知     
 	    @After("allMethod()")     
 	    public void after(){     
-	     //   System.out.println("*****************************【注解-最终通知】:不管方法有没有正常执行完成,"  + "一定会返回的***************");     
+	        System.out.println("*****************************【注解-最终通知】:不管方法有没有正常执行完成,"  + "一定会返回的***************");     
 	    }     
 	         
 	    //应用异常抛出后通知     
 	    @AfterThrowing("allMethod()")     
 	    public void afterThrowing() {     
-	        //System.out.println("******************************【注解-异常抛出后通知】:方法执行时出异常了******************************");     
+	        System.out.println("******************************【注解-异常抛出后通知】:方法执行时出异常了******************************");     
 	    }     
 	         
 	    //应用周围通知     
