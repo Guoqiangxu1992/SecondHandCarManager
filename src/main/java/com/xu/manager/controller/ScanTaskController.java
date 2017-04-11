@@ -17,6 +17,7 @@ import com.xu.manager.bean.ReturnVo;
 import com.xu.manager.bean.ScanTaskDto;
 import com.xu.manager.bean.ScanTaskVo;
 import com.xu.manager.service.ScanTaskService;
+import com.xu.task.forkJoinPool.ForkJoinScanJobManager;
 
 import net.sf.json.JSONObject;
 
@@ -31,6 +32,8 @@ public class ScanTaskController {
 	final Log logger = LogFactory.getLog(getClass());
 	@Autowired
 	private ScanTaskService scanTaskService;
+	@Autowired
+	private ForkJoinScanJobManager forkJoinScanJobManager;
 	
 	@RequestMapping("/scanTask.do")
 	public ModelAndView initScanTask(){
@@ -76,5 +79,12 @@ public class ScanTaskController {
 	@RequestMapping("/threadInfo.do")
     public ModelAndView getThreadInfo(){
 		return new ModelAndView("/system/scan/threadInfo");
+	}
+	
+	@RequestMapping("/forkJoinTask.do")
+	public void forkJoinTask(){
+		ScanTaskVo scanTaskVo = new ScanTaskVo();
+		scanTaskVo.setCarName("本田");
+		forkJoinScanJobManager.scanTaskJob(scanTaskVo);
 	}
 }

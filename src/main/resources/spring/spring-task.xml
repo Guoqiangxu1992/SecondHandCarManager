@@ -10,6 +10,7 @@
 </bean> -->
 <bean name ="testTask" class="com.xu.task.TestTask">
 </bean>
+<bean id ="forkJoinTask" class="com.xu.task.forkJoinPool.ForkJoinTask"/>
 
           
 </beans>          

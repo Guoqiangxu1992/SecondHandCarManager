@@ -2,13 +2,13 @@ package com.xu.manager.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xu.manager.Dto.CarInformationDto;
@@ -66,5 +66,4 @@ public class ScanTaskManagerImpl implements ScanTaskManager{
 		
 		return false;
 	}
-
 }
