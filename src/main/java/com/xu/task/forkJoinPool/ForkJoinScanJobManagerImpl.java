@@ -1,6 +1,7 @@
 package com.xu.task.forkJoinPool;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
@@ -9,10 +10,12 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import com.xu.manager.ClassUtil.SpringUtils;
 import com.xu.manager.Dto.CarInformationDto;
 import com.xu.manager.bean.CarInformation;
 import com.xu.manager.bean.ScanTaskVo;
 import com.xu.manager.dao.CarInformationDao;
+import com.xu.manager.dao.ScanTaskDao;
 
 /**
 * @author Create By Xuguoqiang
@@ -32,15 +35,17 @@ public class ForkJoinScanJobManagerImpl implements ForkJoinScanJobManager{
 			System.out.println("扫描任务开启--->" + scanTaskVo.getCarName());
 			carInfoDto.setCarName(scanTaskVo.getCarName());
 			List<CarInformation> carInfoList = carInformationDao.getCarInformation1(carInfoDto);
+			System.out.println("当前carInfoList大小:"+carInfoList.size());
 			if(CollectionUtils.isNotEmpty(carInfoList)){
-				ForkJoinTask forkJoinTask = new ForkJoinTask(carInfoList,0,carInfoList.size());
+				ForkJoinTaskHasReturn forkJoinTask = new ForkJoinTaskHasReturn(carInfoList,0,carInfoList.size());
 				ForkJoinPool forkJoinPool = new ForkJoinPool();
 				forkJoinPool.execute(forkJoinTask);
+				
 				do{
 					System.out.println("now Thread count is :"+forkJoinPool.getActiveThreadCount());
 					System.out.println("now thread steal count is :"+forkJoinPool.getStealCount());
 					try {
-						TimeUnit.MILLISECONDS.sleep(200);
+						TimeUnit.MILLISECONDS.sleep(2000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -50,6 +55,14 @@ public class ForkJoinScanJobManagerImpl implements ForkJoinScanJobManager{
 				
 				if(forkJoinTask.isCompletedNormally()){
 					System.out.println("Thread is complete!!!!");
+				}
+				
+				ScanTaskDao scanTaskDao = SpringUtils.getBean("scanTaskDao");
+				try {
+					System.out.println("返回结果大小:"+forkJoinTask.get().size());
+					scanTaskDao.saveCheckResult(forkJoinTask.get());
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
 				}
 			}
 		}

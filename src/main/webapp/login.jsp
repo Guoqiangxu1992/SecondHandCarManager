@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
        <%@ include file="/WEB-INF/common/common.jsp" %>
-
+	<%@ include file="/WEB-INF/jsp/system/common.jsp" %>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
     <head>
@@ -65,7 +65,7 @@
 					<input type="password" id="password" class="password" placeholder="Password"  oncontextmenu="return false" onpaste="return false" />
                 </div>
                     <div style="float:left">
-                    		<button id="submit" type="button" >登录</button>
+                    		<button id="submit" type="button" >登录1${name}</button>
                     </div>         
                 	 <div style="float:left">
                     		<button id="regist" type="button" >注册</button>
