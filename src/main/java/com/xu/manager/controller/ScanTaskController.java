@@ -1,5 +1,6 @@
 package com.xu.manager.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.ansj.app.crf.Model;
@@ -17,6 +18,7 @@ import com.xu.manager.bean.ReturnVo;
 import com.xu.manager.bean.ScanTaskDto;
 import com.xu.manager.bean.ScanTaskVo;
 import com.xu.manager.service.ScanTaskService;
+import com.xu.manager.service.TaskInOrderService;
 import com.xu.task.forkJoinPool.ForkJoinScanJobManager;
 
 import net.sf.json.JSONObject;
@@ -34,6 +36,8 @@ public class ScanTaskController {
 	private ScanTaskService scanTaskService;
 	@Autowired
 	private ForkJoinScanJobManager forkJoinScanJobManager;
+	@Autowired
+	private TaskInOrderService taskInOrderService;
 	
 	@RequestMapping("/scanTask.do")
 	public ModelAndView initScanTask(){
@@ -82,9 +86,13 @@ public class ScanTaskController {
 	}
 	
 	@RequestMapping("/forkJoinTask.do")
-	public void forkJoinTask(){
-		ScanTaskVo scanTaskVo = new ScanTaskVo();
-		scanTaskVo.setCarName("本田");
-		forkJoinScanJobManager.scanTaskJob(scanTaskVo);
+	public void forkJoinTask() throws ParseException{
+		taskInOrderService.taskInOrderExecute();
+		taskInOrderService.taskInOrderExecute();
+		//taskInOrderService.taskInOrderExecute();
+		//taskInOrderService.taskInOrderExecute();
+		//ScanTaskVo scanTaskVo = new ScanTaskVo();
+		//scanTaskVo.setCarName("本田");
+		//forkJoinScanJobManager.scanTaskJob(scanTaskVo);
 	}
 }

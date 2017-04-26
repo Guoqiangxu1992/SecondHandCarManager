@@ -1,5 +1,6 @@
 package com.xu.manager.service;
 
+import com.xu.manager.bean.CarInformation;
 import com.xu.manager.bean.ScanTaskVo;
 
 /**
@@ -9,4 +10,6 @@ import com.xu.manager.bean.ScanTaskVo;
 */
 public interface ScanTaskManager {
 	public boolean scanTask(ScanTaskVo scanTaskVo);
+
+	public void scanTask(Long priority);
 }

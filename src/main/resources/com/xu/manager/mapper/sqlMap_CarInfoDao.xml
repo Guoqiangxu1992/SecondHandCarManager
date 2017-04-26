@@ -192,6 +192,9 @@ LEFT JOIN t_user c on a.owner_id = c.id
 	   		<if test="carInfoDto.carName != null" >
 				and a.car_name =#{carInfoDto.carName}
 			</if>
+			<if test="carInfoDto.carName != null" >
+				and a.car_name =#{carInfoDto.carName}
+			</if>
 	   </where>
 	   </sql>
 </mapper> 

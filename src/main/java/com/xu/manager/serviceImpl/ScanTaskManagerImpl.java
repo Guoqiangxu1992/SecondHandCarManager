@@ -66,4 +66,12 @@ public class ScanTaskManagerImpl implements ScanTaskManager{
 		
 		return false;
 	}
+
+
+	@Override
+	public void scanTask(Long priority) {
+		System.out.println(priority);
+	}
+	
+	
 }

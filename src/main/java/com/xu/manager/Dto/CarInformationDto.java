@@ -16,6 +16,7 @@ public class CarInformationDto  extends BaseDto{
        private Date startTime;
        private Date endTime;
        private Long ownerId;
+       private Long carNameId;
 	public String getCarName() {
 		return carName;
 	}
@@ -45,6 +46,12 @@ public class CarInformationDto  extends BaseDto{
 	}
 	public void setOwnerId(Long ownerId) {
 		this.ownerId = ownerId;
+	}
+	public Long getCarNameId() {
+		return carNameId;
+	}
+	public void setCarNameId(Long carNameId) {
+		this.carNameId = carNameId;
 	}
 
 }
