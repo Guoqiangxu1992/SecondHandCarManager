@@ -124,7 +124,8 @@ public class CarInfoController extends BaseController {
         CommonsMultipartFile cf= (CommonsMultipartFile)file; 
         DiskFileItem fi = (DiskFileItem)cf.getFileItem(); 
         File f = fi.getStoreLocation();
-        uploadManager.uploadFile(session, f, fileName, param,carId);
+        Long start = System.currentTimeMillis();
+       	uploadManager.uploadFile(session, f, fileName, param,carId);
 	}
 
 	

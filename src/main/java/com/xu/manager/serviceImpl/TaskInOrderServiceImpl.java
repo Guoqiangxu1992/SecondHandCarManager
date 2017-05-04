@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -45,6 +46,8 @@ public class TaskInOrderServiceImpl implements TaskInOrderService{
 	private SensitiveWordService sensitiveWordService;
 	@Resource
 	private ScanTaskDao scanTaskDao;
+	@Resource
+	private ScanTaskManager scanTaskManager;
 	@SuppressWarnings("static-access")
 	public void taskInOrderExecute() throws ParseException{
 		CarInformationDto carInfoDto = new CarInformationDto();
@@ -59,8 +62,14 @@ public class TaskInOrderServiceImpl implements TaskInOrderService{
 		threadPoolConfig.setUnit(TimeUnit.MILLISECONDS);
 		BlockingQueue<Runnable> quene = new LinkedBlockingQueue<>(50);
 		threadPoolConfig.setWorkQueue(quene);
-		ThreadPoolFactory executor = ThreadPoolFactory.getInstance(threadPoolConfig);
-		executor.addTask(task);
+		//ThreadPoolFactory executor = ThreadPoolFactory.getInstance(threadPoolConfig);
+		PriorityBlockingQueue<Runnable> priorityQuene = new PriorityBlockingQueue<>();
+		ThreadPoolExecutor executor = new ThreadPoolExecutor(3,5, 1, TimeUnit.MILLISECONDS, priorityQuene);
+		for(long i = 0;i<10;i++){
+			TaskInOrder TaskInOrder  =new TaskInOrder(i,scanTaskManager);
+			executor.execute(TaskInOrder);
+		}
+		
 		
 		
 	}

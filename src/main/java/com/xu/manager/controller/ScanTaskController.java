@@ -7,13 +7,13 @@ import org.ansj.app.crf.Model;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nlpcn.commons.lang.util.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xu.hessian.HelloService;
 import com.xu.manager.bean.ReturnVo;
 import com.xu.manager.bean.ScanTaskDto;
 import com.xu.manager.bean.ScanTaskVo;
@@ -38,6 +38,8 @@ public class ScanTaskController {
 	private ForkJoinScanJobManager forkJoinScanJobManager;
 	@Autowired
 	private TaskInOrderService taskInOrderService;
+	@Autowired
+	//private HelloService helloService;
 	
 	@RequestMapping("/scanTask.do")
 	public ModelAndView initScanTask(){
@@ -88,7 +90,9 @@ public class ScanTaskController {
 	@RequestMapping("/forkJoinTask.do")
 	public void forkJoinTask() throws ParseException{
 		taskInOrderService.taskInOrderExecute();
-		taskInOrderService.taskInOrderExecute();
+		//taskInOrderService.taskInOrderExecute();
+	 	//helloService.sayHello("hahaha");
+	 	//helloService.set("yangchunxue", "nicaihaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		//taskInOrderService.taskInOrderExecute();
 		//taskInOrderService.taskInOrderExecute();
 		//ScanTaskVo scanTaskVo = new ScanTaskVo();

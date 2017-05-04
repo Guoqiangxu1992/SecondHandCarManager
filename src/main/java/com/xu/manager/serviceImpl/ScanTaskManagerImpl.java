@@ -70,7 +70,9 @@ public class ScanTaskManagerImpl implements ScanTaskManager{
 
 	@Override
 	public void scanTask(Long priority) {
-		System.out.println(priority);
+		Long a = 10l;
+		a= a+priority;
+		System.out.println(a);
 	}
 	
 	

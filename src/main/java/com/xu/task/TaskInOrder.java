@@ -33,12 +33,13 @@ public class TaskInOrder implements Runnable,Comparable<TaskInOrder>{
 	@Override
 	public void run() {
 		try {
-			Thread.sleep(4000l);
+			Thread.sleep(2000l);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		scanTaskManager.scanTask(priority);
+		//System.out.println("the priority is:"+priority);
 	}
 
 }

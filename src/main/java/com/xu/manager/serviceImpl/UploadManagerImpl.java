@@ -56,7 +56,7 @@ public class UploadManagerImpl implements UploadManager {
 		HttpServletResponse response = null;
 		File file1 = new File(filePath);
 		// 设置相关参数
-		String url = "http://localhost:8080/SecondHandCarManager/upload/uploadfile.do";
+		String url = "http://localhost:8086/SecondHandCarManager/upload/uploadfile.do";
 		client.getHttpConnectionManager().getParams().setConnectionTimeout(100000);
 		client.getHttpConnectionManager().getParams().setSoTimeout(100000);
 		try {
@@ -66,6 +66,9 @@ public class UploadManagerImpl implements UploadManager {
 			StringPart aa = new StringPart("file", file.getName());
 			method.setRequestEntity(new MultipartRequestEntity(parts, method.getParams()));
 			int status = client.executeMethod(method);
+			Header headerResponse1 = method.getResponseHeader("url");
+			System.out.println("返回结果的url"+headerResponse1.getValue());
+			status = 0;
 			if (status == HttpStatus.SC_OK) {
 				byte[] responseBody = method.getResponseBody();
 				Header headerResponse = method.getResponseHeader("url");
@@ -82,7 +85,7 @@ public class UploadManagerImpl implements UploadManager {
 				System.out.println(headerResponse.getValue());
 				System.out.println("上传成功");
 			} else {
-				System.out.println("上传失败");
+				//System.out.println("上传失败");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

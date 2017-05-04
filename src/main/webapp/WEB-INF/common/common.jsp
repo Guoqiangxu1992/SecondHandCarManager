@@ -6,7 +6,7 @@
  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
  <c:set var="xgq" value="${pageContext.request.contextPath}" ></c:set>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html>
 <head>
 	<script src="${xgq}/js/jquery-1.7.2.min.js"></script>
