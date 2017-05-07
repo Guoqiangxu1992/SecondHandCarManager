@@ -36,10 +36,6 @@ public class DownLoadHelper {
 	private CarInformationService carInformationService;
 	//存储下载任务的队列 未指定容量，默认容量为Integer.MAX_VALUE
 	  private BlockingQueue<Runnable> dataq = new LinkedBlockingQueue<Runnable>();
-	  @Autowired
-	  private  HttpServletRequest request; 
-	  @Autowired
-	  private HttpServletResponse response;
 //	    corePoolSize
 //	    核心线程数，核心线程会一直存活，即使没有任务需要处理。当线程数小于核心线程数时，即使现有的线程空闲，线程池也会优先创建新线程来处理任务，而不是直接交给现有的线程处理。
 //	    核心线程在allowCoreThreadTimeout被设置为true时会超时退出，默认情况下不会退出。

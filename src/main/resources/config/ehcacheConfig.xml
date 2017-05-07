@@ -17,7 +17,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 
 	<!-- 配置Ehcache缓存[1] 启用缓存注解功能-->
-	<cache:annotation-driven cache-manager="cacheManager" />
+	<cache:annotation-driven cache-manager="ehcacheManager" />
 
 	<!-- [2]缓存管理器工厂加载ehcache的配置 -->
 	<bean id="cacheManagerFactory"
@@ -26,7 +26,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 	</bean>
 
 	<!-- 声明缓存管理器[3] -->
-	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+	<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager" ref="cacheManagerFactory" />
 	</bean>
 </beans>

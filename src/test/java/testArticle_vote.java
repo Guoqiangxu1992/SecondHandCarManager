@@ -77,9 +77,9 @@ public class testArticle_vote implements Serializable{
 		 menuBean.setLev(1);
 		 menuBean.setMenuName("哟嘻嘻嘻");
 		 list.add(menuBean);
-		 RedisClient.set("xuxu1111", "menuBean");
+/*		 RedisClient.set("xuxu1111", "menuBean");
 		 RedisClient.set("xuxu1111", menuBean);
-		 MenuBean menuBean1= (MenuBean) RedisClient.get("xuxu");
+		 MenuBean menuBean1= (MenuBean) RedisClient.get("xuxu");*/
 		 ObjectsTranscoder<MenuBean> objTranscoder =  new ObjectsTranscoder<>();
 		 byte[] result1 = objTranscoder.serialize(objTranscoder);
 		// MenuBean menuBean1 = objTranscoder.deserialize(result1);

@@ -19,6 +19,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache.ValueWrapper;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,7 @@ import com.xu.manager.service.SensitiveWordService;
 import com.xu.manager.serviceImpl.RedisCache;
 import com.xu.task.AnsyScanTask;
 import com.xu.task.TestTask;
+import com.xu.task.forkJoinPool.ForkJoinScanJobManager;
 
 /**
 * @author Create By Xuguoqiang
@@ -60,6 +62,12 @@ public class TestQuarzController {
 	private TestTask testTask;
 	@Autowired
 	private ScanTaskManager scanTaskManager;
+	@Autowired
+	private RedisCache redisCache;
+    @Autowired  
+    private CacheManager cachemanager;
+    @Autowired
+    private ForkJoinScanJobManager forkJoinScanJobManager;
 	
 	private static Log logger = LogFactory.getLog(TestQuarzController.class);
 	
@@ -137,16 +145,7 @@ public class TestQuarzController {
 	
 	@RequestMapping("/testRedis.do")
 	public void testRedis() throws Exception {
-		//List<MenuBean> list = new ArrayList<>();
-		 
-		 MenuBean menuBean = new MenuBean();
-		 menuBean.setId("hahahahah");
-		 menuBean.setLev(1);
-		 menuBean.setMenuName("哟嘻嘻嘻");
-		 RedisClient.set("xu", "aaaa");
-		RedisClient.set("xu", menuBean);
-		MenuBean menuBean2 = (MenuBean) RedisClient.get("xu");
-		System.out.println(menuBean2.getMenuName());
+		
 	}
 	
 	@RequestMapping("/service.do")
@@ -154,16 +153,16 @@ public class TestQuarzController {
 		helloService.sayHello("xuguoqiang,hello!!!!!");
 		Object o = helloService.set("yangchunxue1111", "l love you11111111!!!");
 		System.out.println("返回值为：---》"+o.toString());
-		Object o1 = messageManager.callBack("xuguoqiang", "hahaha");
+		//Object o1 = messageManager.callBack("xuguoqiang", "hahaha");
 		System.out.println("call="+o.toString());
 		
 	}
 	
 	@RequestMapping("/ansyScanTask.do")
 	public void ansyScanTask() throws InterruptedException, ExecutionException, ParseException{
-		ScanTaskVo scanTaskVo = new ScanTaskVo();
-		scanTaskVo.setCarName("东风");
-		scanTaskManager.scanTask(scanTaskVo);
+		//ScanTaskVo scanTaskVo = new ScanTaskVo();
+		//scanTaskVo.setCarName("东风");
+		//scanTaskManager.scanTask(scanTaskVo);
 	/*	try{
 			logger.info("我是ino级别的日志噢噢噢噢");
 			logger.debug("我是debug制作噢噢噢噢！");
@@ -173,5 +172,20 @@ public class TestQuarzController {
 			logger.error("出现异常信息！！！", e);
 		
 	}*/
+		ScanTaskVo scanTaskVo = new ScanTaskVo();
+		scanTaskVo.setCarName("本田");
+		forkJoinScanJobManager.scanTaskJob(scanTaskVo);
+		redisCache = (RedisCache) cachemanager.getCache("default");
+		redisCache.put("xu1112", "hahahahah");
+		ValueWrapper name = redisCache.get("xu1112");
+		System.out.println(name);
+		try {
+			RedisClient.setString("hahahaha", "value");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		String aaa = (String) RedisClient.getString("hahahaha");
+		System.out.println(aaa);
 	}
 }

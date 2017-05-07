@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
 import com.xu.manager.ClassUtil.ThreadLocalDateUtil;
 import com.xu.manager.bean.ScanTaskVo;
@@ -22,6 +23,7 @@ import com.xu.manager.service.ScanTaskManager;
 * @date   2017年3月18日--下午10:03:08--
 *
 */
+@Component
 public class AnsyScanTask {
 	@Resource
 	private ScanTaskManager scanTaskManager;

@@ -6,8 +6,10 @@ import java.util.concurrent.RecursiveAction;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nlpcn.commons.lang.util.CollectionUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,8 +61,9 @@ public class ScanTaskManagerImpl implements ScanTaskManager{
 						resultList.add(checkResult);
 					}
 				}
-				scanTaskDao.saveCheckResult(resultList);
-				int a = 10/0;
+				if(CollectionUtils.isNotEmpty(resultList)){
+					scanTaskDao.saveCheckResult(resultList);
+				}
 				return true;
 			}
 		

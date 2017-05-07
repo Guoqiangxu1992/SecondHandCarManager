@@ -28,16 +28,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;  
     @Service("redisCache")
 	public class RedisCache implements Cache {  
-	    private StringRedisTemplate redisTemplate;  
+	    private StringRedisTemplate stringredisTemplate;  
 	    private String name;  
 	  
-	    public StringRedisTemplate getRedisTemplate() {  
-	        return redisTemplate;  
-	    }  
-	  
-	    public void StringRedisTemplate(StringRedisTemplate redisTemplate) {  
-	        this.redisTemplate = redisTemplate;  
-	    }  
 	  
 	    public void setName(String name) {  
 	        this.name = name;  
@@ -50,14 +43,14 @@ import org.springframework.stereotype.Service;
 	  
 	    @Override  
 	    public Object getNativeCache() {  
-	        return this.redisTemplate;  
+	        return this.stringredisTemplate;  
 	    }  
 	  
 	    @Override  
 	    public ValueWrapper get(Object key) {  
 	        final String keyf = (String) key;  
 	        Object object = null;  
-	        object = redisTemplate.execute(new RedisCallback<Object>() {  
+	        object = stringredisTemplate.execute(new RedisCallback<Object>() {  
 	            public Object doInRedis(RedisConnection connection) throws DataAccessException {  
 	  
 	                byte[] key = keyf.getBytes();  
@@ -78,7 +71,7 @@ import org.springframework.stereotype.Service;
 	        final Object valuef = value;  
 	        final long liveTime = 86400;  
 	  
-	        redisTemplate.execute(new RedisCallback<Long>() {  
+	        stringredisTemplate.execute(new RedisCallback<Long>() {  
 	            public Long doInRedis(RedisConnection connection) throws DataAccessException {  
 	                byte[] keyb = keyf.getBytes();  
 	                byte[] valueb = toByteArray(valuef);  
@@ -94,7 +87,7 @@ import org.springframework.stereotype.Service;
 	    @Override  
 	    public void evict(Object key) {  
 	        final String keyf = (String) key;  
-	        redisTemplate.execute(new RedisCallback<Long>() {  
+	        stringredisTemplate.execute(new RedisCallback<Long>() {  
 	            public Long doInRedis(RedisConnection connection) throws DataAccessException {  
 	                return connection.del(keyf.getBytes());  
 	            }  
@@ -103,7 +96,7 @@ import org.springframework.stereotype.Service;
 	  
 	    @Override  
 	    public void clear() {  
-	        redisTemplate.execute(new RedisCallback<String>() {  
+	    	stringredisTemplate.execute(new RedisCallback<String>() {  
 	            public String doInRedis(RedisConnection connection) throws DataAccessException {  
 	                connection.flushDb();  
 	                return "ok";  
@@ -176,6 +169,14 @@ import org.springframework.stereotype.Service;
 		public <T> T get(Object arg0, Callable<T> arg1) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+
+		public StringRedisTemplate getStringredisTemplate() {
+			return stringredisTemplate;
+		}
+
+		public void setStringredisTemplate(StringRedisTemplate stringredisTemplate) {
+			this.stringredisTemplate = stringredisTemplate;
 		}  
 	
 }
