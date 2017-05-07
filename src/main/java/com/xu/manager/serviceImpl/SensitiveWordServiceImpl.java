@@ -39,9 +39,6 @@ public class SensitiveWordServiceImpl implements SensitiveWordService {
 				/*EhCacheUtil ehcacheUtil = EhCacheUtil.getInstace();
 				basewordList = ehcacheUtil.getRuleWordInCache(ehcacheUtil.CACHE_NAME, ehcacheUtil.BASE_SCAN_WORD);*/
 				 basewordList  =RedisClient.getObject(key, List.class);
-				if(CollectionUtils.isNotEmpty(basewordList)){
-					System.out.println("Redis get Cache!!!");
-				}
 				if (CollectionUtils.isEmpty(basewordList)) {
 					basewordList = carInformationDao.queryBaseWord();
 					RedisClient.setObject(key, basewordList);

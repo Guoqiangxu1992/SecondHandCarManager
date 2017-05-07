@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xu.manager.bean.Channel;
+import com.xu.manager.bean.LoginUser;
+import com.xu.manager.framework.XgqSessionBag;
 import com.xu.manager.message.GetMessageMain;
 import com.xu.manager.service.MessageService;
 
@@ -44,8 +46,7 @@ public class MessageController {
 	
 	@RequestMapping("/startGetMessage.do")
 	public void startGetMessage(){
-		GetMessageMain getMessageMain  =new GetMessageMain();
-    	getMessageMain.start();
+		LoginUser loginUser1 = XgqSessionBag.getSessionBag().getLoginUser();
 	}
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xu.manager.ClassUtil.RedisClient;
 import com.xu.manager.bean.LoginUser;
 import com.xu.manager.framework.SessionBagImpl;
 import com.xu.manager.framework.XgqSessionBag;
@@ -38,51 +39,41 @@ import com.xu.manager.service.LoginUserService;
 public class LoginUserController {
 	@Autowired
 	private LoginUserService loginUserService;
-	
+
 	@SuppressWarnings("unused")
 	@RequestMapping("/loginAjax.do")
 	@ResponseBody
-	public int info(@Param("username") String username ,@Param("password") String password,Model model,HttpSession session){
-		try{
-			LoginUser user = new LoginUser(); 
-			System.out.println(XgqSessionBag.getSessionBag());
-			//LoginUser loginUser1 = XgqSessionBag.getSessionBag().getLoginUser();
-			//System.out.println(loginUser1.getEmail());
-			SessionBagImpl sessionBag = new SessionBagImpl();
-			if(sessionBag.getLoginUser()!=null){
-				user = sessionBag.getLoginUser();
-			}else{
-				user = loginUserService.findUserByUsername(username);
-				sessionBag.setLoginUser(user);
-				XgqSessionBag.setSessionBag(sessionBag);
-				
-				LoginUser user1  = XgqSessionBag.getSessionBag().getLoginUser();
-				//System.out.println(user1.getLoginName());
-			}
-			
-			session.setAttribute("SESSION_LOGIN_USER",user);
+	public int info(@Param("username") String username, @Param("password") String password, Model model,
+			HttpSession session) {
+		try {
+			String sessionId = session.getId();
+			String appName = "SECOND_HAND_CAR_MANAGER";
+			String RequestId = appName + sessionId;
+			LoginUser user = new LoginUser();
+			user = loginUserService.findUserByUsername(username);
+			RedisClient.setObject(RequestId, user, 1800);
+			session.setAttribute("SESSION_LOGIN_USER", user);
 			Subject subject = SecurityUtils.getSubject();
-			subject.login(new UsernamePasswordToken(username,password));
-			if(subject.isAuthenticated()){
+			subject.login(new UsernamePasswordToken(username, password));
+			if (subject.isAuthenticated()) {
 				return 1;
-			}else{
-				return 0;//密码或者用户名错误
+			} else {
+				return 0;// 密码或者用户名错误
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return 0;
 	}
-	
-	
+
 	@RequestMapping("/tologin.do")
 	@ResponseBody
-	public ModelAndView login(Model model){
+	public ModelAndView login(Model model) {
 		return new ModelAndView("/system/index");
 	}
-	
+
 	@RequestMapping("/loginOut.do")
-	public void loginOut(Model model){
-          
+	public void loginOut(Model model) {
+
 	}
 }
