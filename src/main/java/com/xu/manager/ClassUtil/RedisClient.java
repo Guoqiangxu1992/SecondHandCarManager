@@ -51,6 +51,28 @@ public class RedisClient {
 		jedisPool = new JedisPool(config, ip, port);
 	}
 
+	
+	/**
+	 * Redis是否连接正常
+	 * 
+	 * @param key
+	 *            key
+	 * @param value
+	 *            value
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean getIsConnection() {
+		Jedis jedis = null;
+		try {
+			jedis = jedisPool.getResource();
+			return true;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			jedisPool.returnResource(jedis);
+		}
+	}
 	/**
 	 * 向缓存中设置字符串内容
 	 * 

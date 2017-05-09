@@ -1,10 +1,10 @@
-package com.xu.manager.serviceImpl;
+/*package com.xu.manager.serviceImpl;
 
-/**
+*//**
 * @author Create By Xuguoqiang
 * @date   2017年2月18日--下午5:19:16--
 *
-*/
+*//*
  
 	  
 	import java.io.ByteArrayInputStream;  
@@ -30,7 +30,6 @@ import org.springframework.stereotype.Service;
 	public class RedisCache implements Cache {  
 	    private StringRedisTemplate stringredisTemplate;  
 	    private String name;  
-	  
 	  
 	    public void setName(String name) {  
 	        this.name = name;  
@@ -104,7 +103,7 @@ import org.springframework.stereotype.Service;
 	        });  
 	    }  
 	  
-	    /** 
+	    *//** 
 	     * 描述 : <Object转byte[]>. <br> 
 	     * <p> 
 	     * <使用方法说明> 
@@ -112,7 +111,7 @@ import org.springframework.stereotype.Service;
 	     *  
 	     * @param obj 
 	     * @return 
-	     */  
+	     *//*  
 	    private byte[] toByteArray(Object obj) {  
 	        byte[] bytes = null;  
 	        ByteArrayOutputStream bos = new ByteArrayOutputStream();  
@@ -129,7 +128,7 @@ import org.springframework.stereotype.Service;
 	        return bytes;  
 	    }  
 	  
-	    /** 
+	    *//** 
 	     * 描述 : <byte[]转Object>. <br> 
 	     * <p> 
 	     * <使用方法说明> 
@@ -137,7 +136,7 @@ import org.springframework.stereotype.Service;
 	     *  
 	     * @param bytes 
 	     * @return 
-	     */  
+	     *//*  
 	    private Object toObject(byte[] bytes) {  
 	        Object obj = null;  
 	        try {  
@@ -180,3 +179,4 @@ import org.springframework.stereotype.Service;
 		}  
 	
 }
+*/

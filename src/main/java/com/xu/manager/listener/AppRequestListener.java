@@ -40,18 +40,22 @@ public class AppRequestListener implements ServletRequestListener{
 		String sessionId=request.getSession().getId();
 		String appName = "SECOND_HAND_CAR_MANAGER";
 		String RequestId= appName+sessionId;
-		LoginUser loginUser  = RedisClient.getObject(RequestId, LoginUser.class);
-		if(loginUser!=null){
-			SessionBagImpl sessionBag = new SessionBagImpl();
-			sessionBag.setLoginUser(loginUser);
-			XgqSessionBag.setSessionBag(sessionBag);
-		}else{
-			String username = request.getParameter("username");
-			LoginUserService loginUserService = SpringUtils.getBean("loginUserService");
-			LoginUser loginUser2 = loginUserService.findUserByUsername(username);
-			SessionBagImpl sessionBag = new SessionBagImpl();
-			sessionBag.setLoginUser(loginUser2);
-			XgqSessionBag.setSessionBag(sessionBag);
+		Boolean flage = RedisClient.getIsConnection();
+		
+		if(flage==true){
+			LoginUser loginUser  = RedisClient.getObject(RequestId, LoginUser.class);
+			if(loginUser!=null){
+				SessionBagImpl sessionBag = new SessionBagImpl();
+				sessionBag.setLoginUser(loginUser);
+				XgqSessionBag.setSessionBag(sessionBag);
+			}else{
+				String username = request.getParameter("username");
+				LoginUserService loginUserService = SpringUtils.getBean("loginUserService");
+				LoginUser loginUser2 = loginUserService.findUserByUsername(username);
+				SessionBagImpl sessionBag = new SessionBagImpl();
+				sessionBag.setLoginUser(loginUser2);
+				XgqSessionBag.setSessionBag(sessionBag);
+			}
 		}
 	}
 }

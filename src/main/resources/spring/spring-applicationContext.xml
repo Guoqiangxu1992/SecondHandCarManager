@@ -15,7 +15,7 @@
       http://www.springframework.org/schema/aop 
      http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
        http://www.springframework.org/schema/tx
-         http://www.springframework.org/schema/tx/spring-tx.xsd">
+         http://www.springframework.org/schema/tx/spring-tx.xsd"> 
 
 	<!-- 自动扫描 自动扫描 将标注Spring注解的类自动转化Bean -->
 	<context:component-scan base-package="com.xu" >
@@ -62,9 +62,11 @@
 	<!-- <import resource="classpath:config/ehcacheConfig.xml" /> -->
 	<import resource="classpath:spring/spring-hessian.xml" />
     <import resource="classpath:spring/spring-dynamicQuarz.xml" />
-	<import resource="classpath:spring/spring-task.xml" />
+	<import resource="classpath:spring/spring-task.xml" /> 
 	<import resource="classpath:config/redis-context.xml" />
 	<!-- <import resource="classpath:dubbo/helloService.xml" /> -->
+	<import resource="classpath:config/redis-Operations.xml" />
+	
 	
 	
 	

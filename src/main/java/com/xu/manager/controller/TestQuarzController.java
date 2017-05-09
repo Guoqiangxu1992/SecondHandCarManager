@@ -37,7 +37,6 @@ import com.xu.manager.service.HelloService;
 import com.xu.manager.service.MessageManager;
 import com.xu.manager.service.ScanTaskManager;
 import com.xu.manager.service.SensitiveWordService;
-import com.xu.manager.serviceImpl.RedisCache;
 import com.xu.task.AnsyScanTask;
 import com.xu.task.TestTask;
 import com.xu.task.forkJoinPool.ForkJoinScanJobManager;
@@ -62,10 +61,10 @@ public class TestQuarzController {
 	private TestTask testTask;
 	@Autowired
 	private ScanTaskManager scanTaskManager;
-	@Autowired
-	private RedisCache redisCache;
-    @Autowired  
-    private CacheManager cachemanager;
+	/*@Autowired
+	private RedisCache redisCache;*/
+    /*@Autowired  
+    private CacheManager cachemanager;*/
     @Autowired
     private ForkJoinScanJobManager forkJoinScanJobManager;
 	
@@ -175,10 +174,10 @@ public class TestQuarzController {
 		ScanTaskVo scanTaskVo = new ScanTaskVo();
 		scanTaskVo.setCarName("本田");
 		forkJoinScanJobManager.scanTaskJob(scanTaskVo);
-		redisCache = (RedisCache) cachemanager.getCache("default");
+/*		redisCache = (RedisCache) cachemanager.getCache("default");
 		redisCache.put("xu1112", "hahahahah");
-		ValueWrapper name = redisCache.get("xu1112");
-		System.out.println(name);
+		ValueWrapper name = redisCache.get("xu1112");*/
+/*		System.out.println(name);*/
 		try {
 			RedisClient.setString("hahahaha", "value");
 		} catch (Exception e) {

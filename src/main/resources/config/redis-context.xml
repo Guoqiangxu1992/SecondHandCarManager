@@ -1,54 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>  
-<beans xmlns="http://www.springframework.org/schema/beans"  
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"  
-    xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"  
-    xmlns:c="http://www.springframework.org/schema/c"  
-    xsi:schemaLocation="  
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="  
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd  
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd  
         http://www.springframework.org/schema/cache   
-        http://www.springframework.org/schema/cache/spring-cache-3.2.xsd"  
-    default-lazy-init="true">  
-  
-    <context:property-placeholder location="classpath:properties/redis.properties" />  
-      
-    <!-- 自动扫描包 -->  
-  
-  
-     <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
-    <cache:annotation-driven cache-manager="redisCacheManager" />  
-  
-   <!--  spring自己的换管理器，这里定义了两个缓存位置名称 ，既注解中的value   -->
-    <bean id="redisCacheManager" class="org.springframework.cache.support.SimpleCacheManager">  
-        <property name="caches">  
-            <set>  
-                <bean class="com.xu.manager.serviceImpl.RedisCache"> 
-                	 <property name="stringredisTemplate" ref="stringredisTemplate" />  
-                    <property name="name" value="default" /> 
-                </bean>  
-            </set>  
-        </property>  
-    </bean> 
-<!-- redis 相关配置    --> 
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
-        <property name="maxIdle" value="200" />  
-        <property name="maxTotal" value="500" />  
-        <property name="maxWaitMillis" value="2000" />  
-        <property name="testOnBorrow" value="true" />  
-    </bean>  
-  
-    <bean id="connectionFactory"  
-        class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">  
-        <property name="hostName" value="192.168.5.130" />  
-        <property name="port" value="6379" />  
-        <property name="password" value="" />  
-        <property name="timeout" value="100000" />  
-        <property name="usePool" value="true" />
-        <property name="poolConfig" ref="poolConfig" />
-    </bean>  
-  
-    <bean id="stringredisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">  
-        <property name="connectionFactory" ref="connectionFactory" />  
-    </bean>   
+        http://www.springframework.org/schema/cache/spring-cache-3.2.xsd"
+	default-lazy-init="true">
+
+	<context:property-placeholder location="classpath:properties/redis.properties" />
+
+	<!-- redis 相关配置 -->
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="200" />
+		<property name="maxTotal" value="500" />
+		<property name="maxWaitMillis" value="2000" />
+		<property name="testOnBorrow" value="true" />
+	</bean>
+
+	<bean id="connectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="192.168.5.130" />
+		<property name="port" value="6379" />
+		<property name="password" value="" />
+		<property name="timeout" value="100000" />
+		<property name="usePool" value="true" />
+		<property name="poolConfig" ref="poolConfig" />
+	</bean>
+
+	<bean id="stringSerializer"
+		class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+
+	<bean id="jdkSerializationRedisSerializer"
+		class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="keySerializer" ref="stringSerializer" />
+		<property name="valueSerializer" ref="jdkSerializationRedisSerializer" />
+		<property name="hashKeySerializer" ref="stringSerializer" />
+		<property name="hashValueSerializer" ref="jdkSerializationRedisSerializer" />
+	</bean>
+
+
+	<!-- spring-data-redis提供了多种serializer策略，这对使用jedis的开发者而言，实在是非常便捷。sdr提供了4种内置的serializer： 
+		JdkSerializationRedisSerializer：使用JDK的序列化手段(serializable接口，ObjectInputStrean，ObjectOutputStream)
+		，数据以字节流存储，POJO对象的存取场景，使用JDK本身序列化机制，将pojo类通过ObjectInputStream/ObjectOutputStream进行序列化操作，最终redis-server中将存储字节序列，是目前最常用的序列化策略。 
+		StringRedisSerializer：字符串编码，数据以string存储，Key或者value为字符串的场景，根据指定的charset对数据的字节序列编码成string，是“new 
+		String(bytes, charset)”和“string.getBytes(charset)”的直接封装。是最轻量级和高效的策略。 JacksonJsonRedisSerializer：
+		json格式存储，jackson-json工具提供了javabean与json之间的转换能力，可以将pojo实例序列化成json格式存储在redis中，也可以将json格式的数据转换成pojo实例。
+		因为jackson工具在序列化和反序列化时，需要明确指定Class类型，因此此策略封装起来稍微复杂。【需要jackson-mapper-asl工具支持】 
+		OxmSerializer：xml格式存储，提供了将javabean与xml之间的转换能力，目前可用的三方支持包括jaxb，apache-xmlbeans;redis存储的数据将是xml工具。不过使用此策略，
+		编程将会有些难度，而且效率最低;不建议使用。【需要spring-oxm模块的支持】
+		 -->
 </beans>  		

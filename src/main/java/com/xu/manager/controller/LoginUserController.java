@@ -51,7 +51,10 @@ public class LoginUserController {
 			String RequestId = appName + sessionId;
 			LoginUser user = new LoginUser();
 			user = loginUserService.findUserByUsername(username);
-			RedisClient.setObject(RequestId, user, 1800);
+			Boolean flage = RedisClient.getIsConnection();
+			if(flage==true){
+				RedisClient.setObject(RequestId, user, 1800);
+			}
 			session.setAttribute("SESSION_LOGIN_USER", user);
 			Subject subject = SecurityUtils.getSubject();
 			subject.login(new UsernamePasswordToken(username, password));
