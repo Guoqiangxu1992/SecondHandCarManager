@@ -1,3 +1,4 @@
+package Data;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.OutputStreamWriter;
@@ -5,6 +6,7 @@ import java.io.PrintWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.xu.manager.ClassUtil.SpringUtils;
 import com.xu.manager.bean.LoginUser;
 import com.xu.manager.service.AccountService;
 
@@ -35,7 +37,7 @@ public class Data implements Runnable{
 				loginUser.setName(saleName[Num]);
 				loginUser.setEmail(email[Num]);
 				loginUser.setPhone(phone[Num]);
-				
+				accountService =SpringUtils.getBean("accountService");
 				accountService.saveUser(loginUser);
 			}
 		}catch(Exception e){

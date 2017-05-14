@@ -1,5 +1,9 @@
 <%@ page pageEncoding="UTF-8"%>
 
+<script type="text/javascript">
+	
+	
+</script>
 
 <!--header start-->
       <header class="header white-bg">
@@ -8,6 +12,7 @@
             </div>
             <!--logo start-->
             <a href="index.html" class="logo">Flat<span>lab</span></a>
+            <a href="http://localhost:8086/SecondHandCarManager/druid/index.html" class="logo">Druid<span>Monitor</span></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
@@ -26,12 +31,12 @@
                             <li>
                                 <a href="#">
                                     <div class="task-info">
-                                        <div class="desc">Dashboard v1.3</div>
-                                        <div class="percent">40%</div>
+                                        <div class="desc">Dashboard v1.34444</div>
+                                        <div class="percent">77%</div>
                                     </div>
                                     <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 77%">
+                                            <span class="sr-only">77% Complete (success)</span>
                                         </div>
                                     </div>
                                 </a>

@@ -27,9 +27,11 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 				System.out.println("--                                                                                                                                          --");
 				System.out.println("--                                                                                                                                          --");
 				System.out.println("------------------------------------------------------------------------------------------------");
+				System.out.println("Redis订阅消息开始监听！！！！");
+				GetMessageMain getMessageMain  =new GetMessageMain();
+		    	getMessageMain.start();
 			}
-			GetMessageMain getMessageMain  =new GetMessageMain();
-	    	//getMessageMain.start();
+			
 		}catch(Exception e){}
 	}
 

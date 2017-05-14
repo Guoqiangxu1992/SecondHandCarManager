@@ -24,6 +24,7 @@ import com.xu.task.AnsyScanTask.ScanTaskThread;
 * @date   2017年3月19日--下午7:10:41--
 *
 */
+@Resource
 public class TestTask {
 
 	@Resource
@@ -38,40 +39,37 @@ public class TestTask {
 		 //executor.execute(ScanTaskThread);
 		ScanTaskVo scanTaskVo1 = new ScanTaskVo();
 		for(int i = 0;i<10;i++){
-			
 			scanTaskVo1.setCarName("红旗"+i);
 			ScanTaskThread ScanTaskThread1 = new ScanTaskThread(scanTaskVo1);
-			//System.out.println("aaa"+scanTaskVo1.hashCode()+"bb"+scanTaskVo1.getCarName());
-			//new Thread(new ScanTaskThread(scanTaskVo1)).start();;
-			//Thread.sleep(2000l);
 			executor.execute(ScanTaskThread1);
 			
 		}
 	}
 	
 	class ScanTaskThread implements Runnable{
-		private ScanTaskVo scanTaskVo;
+		ScanTaskVo scanTaskVo1 = new ScanTaskVo();
+		 int a;
+		ScanTaskVo scanTaskVo = new ScanTaskVo();
 		public ScanTaskThread(ScanTaskVo scanTaskVo){
 			this.scanTaskVo=scanTaskVo;
 		}
-		private ThreadLocal<ScanTaskVo> threadLocal = new ThreadLocal<ScanTaskVo>(){
+		/*private ThreadLocal<ScanTaskVo> threadLocal = new ThreadLocal<ScanTaskVo>(){
 			@Override 
 	        protected ScanTaskVo initialValue() { 
 	            //System.out.println(Thread.currentThread().getName()+"initialValue"); 
 	            return scanTaskVo; 
 	        }
-		};
+		};*/
 		
 		@Override
 		public void run() {
+			
 			try{
-				for(int i = 0;i<10;i++){
-					scanTaskVo.setCarName("haha"+i);
-					threadLocal.set(scanTaskVo);
-					System.out.println(Thread.currentThread().getName()+"---入场:"+threadLocal.get().getCarName());
-					Thread.sleep((long) ((Math.random()*2)*1000l));
-				}
-				
+				scanTaskVo1.setCarName("hahah"+Math.random()*10+1);
+					//threadLocal.set(scanTaskVo);
+				a= (int) (Math.random()*1000+1);
+					Thread.sleep(4l);
+				System.out.println(Thread.currentThread().getName()+"---入场:"+scanTaskVo1.getCarName()+","+a);
 				//scanTaskVo.setCarName(Thread.currentThread().getName());
 				//threadLocal.set(scanTaskVo);
 				//boolean flag = scanTaskManager.scanTask(scanTaskVo);

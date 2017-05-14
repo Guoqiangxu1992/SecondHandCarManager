@@ -2,6 +2,7 @@ package com.xu.manager.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import com.Redis.RedisHashOperations;
 import com.Redis.RedisListOperations;
 import com.Redis.RedisValueOperations;
 import com.xu.manager.bean.CarInformation;
+import com.xu.manager.bean.TaskResult;
 
 /**
 * @author Create By Xuguoqiang
@@ -44,6 +46,15 @@ public class TestController {
 		
 		redisHashOperations.saveHash("carInformation2", "carInformation2", carInformation2);
 		CarInformation carInformation3  =(CarInformation) redisHashOperations.getHash("carInformation2", "carInformation2");
+		
+		String key = "XUGUOQIANG_CHECKWORD_RESULT_TASK1";
+		Set<String> keys = redisHashOperations.getHashKeys(key);
+		TaskResult taskResult = new TaskResult();
+		for(String s:keys){
+			taskResult.setName(s=s.substring(1,s.length()-1).substring(0, s.length()-2));
+			taskResult.setName(s);
+			System.out.println(redisHashOperations.getHash(key, s));
+		}
 	}
 
 }

@@ -1,5 +1,30 @@
 <%@ page pageEncoding="UTF-8"%>
-
+<%@ include file="/WEB-INF/common/common.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<script type="text/javascript">
+$(document).ready(function () {
+	
+	setInterval("startRequest()",100000);
+	});
+	function startRequest()
+	{
+		$.ajax({
+			  async : false, //同步请求
+			  url : '${xgq}/server/getMessage.do',
+			  type : 'POST',
+			  dataType : 'json',
+			  timeout:1000,
+			  success:function(data){
+				  var str = eval(data);
+				  console.log(str);
+					
+			  },
+			  error: function() {
+			        // alert("失败，请稍后再试！");
+			      }
+			 });
+	}
+</script>
 
 <!--header start-->
       <header class="header white-bg">
@@ -26,7 +51,7 @@
                             <li>
                                 <a href="#">
                                     <div class="task-info">
-                                        <div class="desc">Dashboard v1.3</div>
+                                        <div class="desc">Dashboard v1.3111111</div>
                                         <div class="percent">40%</div>
                                     </div>
                                     <div class="progress progress-striped">
@@ -216,6 +241,10 @@
                 </ul>
                 <!--  notification end -->
             </div>
+            <div class="nav notify-row" id="top_menu">
+            	<a target="_blank" href="http://localhost:8086/SecondHandCarManager/druid/index.html" class="logo">Druid<span>Monitor(查看数据库连接信息)</span></a>
+            </div>
+            
             <div class="top-nav ">
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">

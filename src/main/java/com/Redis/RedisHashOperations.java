@@ -1,5 +1,7 @@
 package com.Redis;
 
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +30,15 @@ public class RedisHashOperations {
 	public Object getHash(String key,String hashKey){
 		return opsForHash.get(key, hashKey);
 	}
+	
+	public void saveHashIncrement(String key,String hashKey,Long value){
+		opsForHash.increment(key, hashKey, value);
+	}
+	
+	public Set<String> getHashKeys(String key){
+		return opsForHash.keys(key);
+	}
+	
+	
 
 }

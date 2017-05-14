@@ -8,9 +8,14 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.Redis.RedisHashOperations;
+import com.Redis.RedisListOperations;
+import com.Redis.RedisValueOperations;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.xu.manager.ClassUtil.RedisClient;
 import com.xu.manager.ClassUtil.SpringUtils;
 import com.xu.manager.Dto.CarInformationDto;
@@ -29,6 +34,10 @@ import com.xu.manager.dao.ScanTaskDao;
 public class ForkJoinScanJobManagerImpl implements ForkJoinScanJobManager{
 	@Resource(name = "carInformationDao")
 	private CarInformationDao carInformationDao;
+	@Autowired
+	private RedisHashOperations redisHashOperations;
+	@Autowired
+	private RedisListOperations redisListOperations;
 	
 	
 	public void scanTaskJob(ScanTaskVo scanTaskVo){
@@ -65,9 +74,8 @@ public class ForkJoinScanJobManagerImpl implements ForkJoinScanJobManager{
 					System.out.println("返回结果大小:"+forkJoinTask.get().size());
 					//scanTaskDao.saveCheckResult(forkJoinTask.get());
 					List<CheckResult> checkResultList = forkJoinTask.get();
-					String key  = "XUGUOQIANG_CHECKWORD_RESULT_TASK";
-					for(CheckResult result:checkResultList){
-						RedisClient.IntoListByRpush(key, result);
+					for(CheckResult c:checkResultList){
+						redisHashOperations.saveHashIncrement("XUGUOQIANG_CHECKWORD_RESULT_TASK1", c.getResult(), 1l);
 					}
 					RedisClient.publishMessage("XUGUOQIANG_CHANNEL_TEST", "YOU TASK HAS BEAN DOWN!!!!,YOU CAN TO DO IT!");
 				} catch (InterruptedException | ExecutionException e) {

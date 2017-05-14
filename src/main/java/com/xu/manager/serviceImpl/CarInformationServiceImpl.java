@@ -39,10 +39,13 @@ public class CarInformationServiceImpl implements CarInformationService{
 
 	@Override
 	public Pagination getCarInformation(CarInformationDto carInfoDto) {
+		Long a = System.currentTimeMillis();
 		Pagination pageination = new Pagination();
 		List<CarInformation> list = new ArrayList<CarInformation>();
 		int count = carInformationDao.countGetCarInformation(carInfoDto);
 		list = carInformationDao.getCarInformation(carInfoDto);
+		Long b = System.currentTimeMillis();
+		System.out.println("耗时："+(b-a));
 		if(CollectionUtils.isNotEmpty(list)){
 			pageination.setResultList(list);
 			pageination.setTotalCount(count);

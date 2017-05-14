@@ -61,7 +61,7 @@ FROM
 	car_info a
 LEFT JOIN price b ON a.car_id = b.car_id
 LEFT JOIN t_user c on a.owner_id = c.id 
-order by create_date desc
+ORDER BY  a.create_date  desc
  limit #{carInfoDto.start},#{carInfoDto.limit}
  
 	</select>
