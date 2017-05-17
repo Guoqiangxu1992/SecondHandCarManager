@@ -9,4 +9,5 @@ import com.xu.manager.bean.ScanTaskVo;
 */
 public interface ForkJoinScanJobManager {
 	public void scanTaskJob(ScanTaskVo scanTaskVo);
+	public void countCarType();
 }

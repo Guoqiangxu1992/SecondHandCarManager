@@ -2,9 +2,14 @@
 <%@ include file="/WEB-INF/common/common.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <script type="text/javascript">
-$(document).ready(function () {
+  var messageList = ${messageList};
+  var ReportListLength =${ReportListLength};
+  var messageList2 = ${messageList2};
+  var messageSize  =${messageSize};
+/* $(document).ready(function () {
 	
-	setInterval("startRequest()",100000);
+	startRequest();
+	//setInterval("startRequest()",10000);
 	});
 	function startRequest()
 	{
@@ -15,15 +20,25 @@ $(document).ready(function () {
 			  dataType : 'json',
 			  timeout:1000,
 			  success:function(data){
-				  var str = eval(data);
-				  console.log(str);
-					
+				  alert()
+				  messageList = eval(data);
+				  console.log(messageList);
+				   $.each(messageList.rows,function(n,value){
+	      			        html='<a href="#"><div class="task-info">';
+                            html+='<div class="desc"></div>';
+                            html+='<div class="percent">';
+                            htl+='</div><div class="progress progress-striped">';
+		     	            html+='<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"><span class="sr-only">40% Complete (success)</span></div>';
+		     	            html+='</div></a></li>'
+	   				       $("#task").append(html);
+		});  
+					 
 			  },
 			  error: function() {
-			        // alert("失败，请稍后再试！");
+			         alert("失败，请稍后再试！");
 			      }
 			 });
-	}
+	} */
 </script>
 
 <!--header start-->
@@ -41,144 +56,59 @@ $(document).ready(function () {
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <i class="icon-tasks"></i>
-                            <span class="badge bg-success">6</span>
+                            <span class="badge bg-success">${ReportListLength}</span>
                         </a>
-                        <ul class="dropdown-menu extended tasks-bar">
+                        <table id = "task">
+                        	<ul class="dropdown-menu extended tasks-bar">
                             <div class="notify-arrow notify-arrow-green"></div>
                             <li>
-                                <p class="green">You have 6 pending tasks</p>
+                                <p class="green">You have ${ReportListLength} pending tasks</p>
                             </li>
-                            <li>
+                            <c:forEach  items="${messageList}" var="message" begin="0" end="5">
+								<li>
                                 <a href="#">
                                     <div class="task-info">
-                                        <div class="desc">Dashboard v1.3111111</div>
-                                        <div class="percent">40%</div>
+                                        <div class="desc">${message.name}</div>
+                                        <div class="percent">${message.rate}</div>
                                     </div>
                                     <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="${message.rate}" aria-valuemin="0" aria-valuemax="100" style="width:${message.rate}%">
                                         </div>
                                     </div>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Database Update</div>
-                                        <div class="percent">60%</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            <span class="sr-only">60% Complete (warning)</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Iphone Development</div>
-                                        <div class="percent">87%</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 87%">
-                                            <span class="sr-only">87% Complete</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Mobile App</div>
-                                        <div class="percent">33%</div>
-                                    </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
-                                            <span class="sr-only">33% Complete (danger)</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="task-info">
-                                        <div class="desc">Dashboard v1.3</div>
-                                        <div class="percent">45%</div>
-                                    </div>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                            <span class="sr-only">45% Complete</span>
-                                        </div>
-                                    </div>
-
-                                </a>
-                            </li>
+                            </c:forEach>
                             <li class="external">
                                 <a href="#">See All Tasks</a>
                             </li>
                         </ul>
+                        </table>
                     </li>
                     <!-- settings end -->
                     <!-- inbox dropdown start-->
                     <li id="header_inbox_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <i class="icon-envelope-alt"></i>
-                            <span class="badge bg-important">5</span>
+                            <span class="badge bg-important">${messageSize}</span>
                         </a>
                         <ul class="dropdown-menu extended inbox">
                             <div class="notify-arrow notify-arrow-red"></div>
                             <li>
-                                <p class="red">You have 5 new messages</p>
+                                <p class="red">You have ${messageSize} new messages</p>
                             </li>
-                            <li>
+                            <c:forEach  items="${messageList2}" var="message2" begin="0" end="5">
+								<li>
                                 <a href="#">
                                     <span class="photo"><img alt="avatar" src="./img/avatar-mini.jpg"></span>
                                     <span class="subject">
-                                    <span class="from">Jonathan Smith</span>
+                                    <span class="from">Xuguoqiang</span>
                                     <span class="time">Just now</span>
                                     </span>
-                                    <span class="message">
-                                        Hello, this is an example msg.
-                                    </span>
+                                    <span class="message">${message2}</span>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./img/avatar-mini2.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jhon Doe</span>
-                                    <span class="time">10 mins</span>
-                                    </span>
-                                    <span class="message">
-                                     Hi, Jhon Doe Bhai how are you ?
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./img/avatar-mini3.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jason Stathum</span>
-                                    <span class="time">3 hrs</span>
-                                    </span>
-                                    <span class="message">
-                                        This is awesome dashboard.
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="photo"><img alt="avatar" src="./img/avatar-mini4.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jondi Rose</span>
-                                    <span class="time">Just now</span>
-                                    </span>
-                                    <span class="message">
-                                        Hello, this is metrolab
-                                    </span>
-                                </a>
-                            </li>
+                               </li>
+                            </c:forEach>
+                            
                             <li>
                                 <a href="#">See all messages</a>
                             </li>

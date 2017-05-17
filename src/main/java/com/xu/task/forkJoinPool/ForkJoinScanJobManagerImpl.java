@@ -89,4 +89,35 @@ public class ForkJoinScanJobManagerImpl implements ForkJoinScanJobManager{
 		
 	}
 
+
+	@Override
+	public void countCarType() {
+
+		CarInformationDto carInfoDto = new CarInformationDto();
+		List<CarInformation> carInfoList = carInformationDao.getCarInformation1(carInfoDto);
+		System.out.println("当前carInfoList大小:"+carInfoList.size());
+		if(CollectionUtils.isNotEmpty(carInfoList)){
+			forkJoinTaskCountCar forkJoinTask = new forkJoinTaskCountCar(carInfoList,redisHashOperations,0,carInfoList.size());
+			ForkJoinPool forkJoinPool = new ForkJoinPool();
+			forkJoinPool.execute(forkJoinTask);
+			
+			do{
+				System.out.println("now Thread count is :"+forkJoinPool.getActiveThreadCount());
+				System.out.println("now thread steal count is :"+forkJoinPool.getStealCount());
+				try {
+					TimeUnit.MILLISECONDS.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}while(!forkJoinTask.isDone());
+			
+			forkJoinPool.shutdown();
+			
+			if(forkJoinTask.isCompletedNormally()){
+				System.out.println("Thread is complete!!!!");
+			}
+		}
+	
+	}
+
 }

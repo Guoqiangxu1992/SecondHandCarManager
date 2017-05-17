@@ -8,6 +8,7 @@ package com.xu.manager.bean;
 public class TaskResult {
 	private String name;
 	private String value;
+	private Double rate; 
 	public String getName() {
 		return name;
 	}
@@ -19,6 +20,12 @@ public class TaskResult {
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+	public Double getRate() {
+		return rate;
+	}
+	public void setRate(Double rate) {
+		this.rate = rate;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.xu.manager.controller;
 
+import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -68,19 +69,30 @@ public class ServerController {
 	@ResponseBody
 	public String getMessage(){
 		MessageInfomation messageInfo = new MessageInfomation();
+		String hashKey = "count_car_type";
 		String key = "XUGUOQIANG_CHECKWORD_RESULT_TASK1";
-		Set<String> keys = redisHashOperations.getHashKeys(key);
+		Set<String> keys = redisHashOperations.getHashKeys(hashKey);
 		List<TaskResult> taskResultList =new ArrayList<>();
-		TaskResult taskResult = new TaskResult();
-		/*for(String s:keys){
-			taskResult.setName(s=s.substring(1,s.length()-1).substring(0, s.length()-2));
-			taskResult.setValue(redisHashOperations.getHash(key, s).toString());
+		
+		Long total = 0l;
+		for(String s:keys){
+			TaskResult taskResult = new TaskResult();
+			taskResult.setName(s);
+			taskResult.setValue(redisHashOperations.getHash(hashKey, s).toString());
 			taskResultList.add(taskResult);
-		}*/
-		List<Object> messageList =redisListOperations.getList(channel1, 0l, -1l);
-		messageInfo.setMessageList(messageList);
+			total+=Long.valueOf( redisHashOperations.getHash(hashKey, s).toString());
+		}
+		for(TaskResult task:taskResultList){
+			Double rate = new BigDecimal(((Long.valueOf(task.getValue())*1.0/total)*100)).doubleValue();
+			task.setRate(rate);
+		}
+		//List<Object> messageList =redisListOperations.getList(channel1, 0l, -1l);
+		//messageInfo.setMessageList(messageList);
+		com.alibaba.fastjson.JSONObject object = new com.alibaba.fastjson.JSONObject();
 		messageInfo.setTaskResult(taskResultList);
-		return messageInfo.toString();
+		String json = object.toJSONString(messageInfo);
+		System.out.println(json);
+		return json.toString();
 		
 	}
 

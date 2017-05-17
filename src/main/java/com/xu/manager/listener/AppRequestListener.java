@@ -9,6 +9,7 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.lang.StringUtils;
 import org.nlpcn.commons.lang.util.CollectionUtil;
 import org.springframework.context.ApplicationContext;
@@ -38,12 +39,12 @@ public class AppRequestListener implements ServletRequestListener{
 	public void requestInitialized(ServletRequestEvent arg0) {
 		HttpServletRequest request = (HttpServletRequest) arg0.getServletRequest();
 		String sessionId=request.getSession().getId();
-		String appName = "SECOND_HAND_CAR_MANAGER";
-		String RequestId= appName+sessionId;
-		Boolean flage = RedisClient.getIsConnection();
+		javax.servlet.http.Cookie[] cookies = request.getCookies();
 		
+		String appName = "SECOND_HAND_CAR_MANAGER";
+		Boolean flage = RedisClient.getIsConnection();
 		if(flage==true){
-			LoginUser loginUser  = RedisClient.getObject(RequestId, LoginUser.class);
+			LoginUser loginUser  = RedisClient.getObject(sessionId, LoginUser.class);
 			if(loginUser!=null){
 				SessionBagImpl sessionBag = new SessionBagImpl();
 				sessionBag.setLoginUser(loginUser);

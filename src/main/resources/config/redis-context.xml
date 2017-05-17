@@ -42,7 +42,7 @@
 		<property name="keySerializer" ref="stringSerializer" />
 		<property name="valueSerializer" ref="jdkSerializationRedisSerializer" />
 		<property name="hashKeySerializer" ref="stringSerializer" />
-		<property name="hashValueSerializer" ref="jdkSerializationRedisSerializer" />
+		<property name="hashValueSerializer" ref="stringSerializer" />
 	</bean>
 
 </beans>  		
