@@ -34,5 +34,14 @@ public class ForkJoinScanJobManagerTest extends BaseTest{
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testCountCarType() {
+		try{
+			forkJoinScanJobManagerImpl.countCarType();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
 }

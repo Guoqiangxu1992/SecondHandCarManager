@@ -95,5 +95,17 @@ public class ServerController {
 		return json.toString();
 		
 	}
-
+	
+	@RequestMapping("/initMemoryReport.do")
+	public ModelAndView initMemoryReport(){
+		return new ModelAndView("/system/report/memory");
+			
+		}
+	
+	@RequestMapping("/getMemoryData.do")
+	@ResponseBody
+	public int getMemoryData(){
+		Runtime runtime = Runtime.getRuntime();
+		return (int)(runtime.totalMemory()-runtime.freeMemory())/(1024*1024);
+	}
 }
